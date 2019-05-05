@@ -1,16 +1,16 @@
 [{
-	"name": "哪怕",
-	"artist": "莫文蔚",
-	"url": "http://m10.music.126.net/20190506005608/c97b028166345559baaa8a4884ef22bc/ymusic/a075/27e0/e7e6/2b6923b0a8398102c848e63f6f57c691.mp3",
-	"cover": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557084028945&di=3dd2608f23c4981578d8b4f5d13029b7&imgtype=0&src=http%3A%2F%2Fbusiness.cdn.qianqian.com%2Fqianqian%2Fpic%2Fbos_client_1513774059d77df6a795fb088d53859f5feaaac1b1.jpg"
+	"name": "五月雨变奏电音",
+	"artist": "AnimeVibe",
+	"url": "http://static.blinkfox.com/music1.mp3",
+	"cover": "http://static.blinkfox.com/music-cover1.png"
 }, {
 	"name": "Take me hand",
 	"artist": "DAISHI DANCE,Cecile Corbel",
-	"url": "/medias/music/music2.mp3",
-	"cover": "/medias/music/cover2.png"
+	"url": "http://static.blinkfox.com/music2.mp3",
+	"cover": "http://static.blinkfox.com/music-cover2.png"
 }, {
-	"name": "当年情",
-	"artist": "张国荣",
-	"url": "http://m10.music.126.net/20190506005810/8931b94d7ac12f50739f21de75d744e5/ymusic/4f19/2eb4/b089/c6987dfc08ea7b5e35a7b079d975782a.mp3",
-	"cover": "http://xxx.com/music-cover3.png"
+	"name": "Shape of You",
+	"artist": "J.Fla",
+	"url": "http://static.blinkfox.com/music3.mp3",
+	"cover": "http://static.blinkfox.com/music-cover3.png"
 }]
