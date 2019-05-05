@@ -38,7 +38,8 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
+  # enable: true
+  enable: false
   line_number: true
   auto_detect: false
   tab_replace:
@@ -82,3 +83,42 @@ deploy:
   type: git
   repo: git@github.com:Coderzgh/Coderzgh.github.io.git
   branch: master
+
+
+#plugin  自己添加插件
+
+prism_plugin:         #注释掉默认hexo（以上highlight: enable: false ）代码高亮，使用插件 hexo-prism-plugin，安装命令如下： npm i -S hexo-prism-plugin
+  mode: 'preprocess'    # realtime/preprocess
+  theme: 'tomorrow'
+  line_number: false    # default false
+  custom_css:
+
+search:               # 使用到了 hexo-generator-search 的 Hexo 插件来做内容搜索 ，安装命令如下：npm install hexo-generator-search --save
+  path: search.xml
+  field: post
+
+permalink_pinyin: #中文链接转拼音  --未安装成功
+  enable: true
+  separator: '-' # default: '-'
+
+wordCount:   #文章字数统计插件
+  enable: false # 将这个值设置为 true 即可. --未安装成功
+  postWordCount: true
+  min2read: true
+  totalCount: true
+
+
+# 是否在首页显示音乐.
+music:
+  enable: true
+  showTitle: false
+  title: 听听音乐
+  fixed: false # 是否开启吸底模式
+  autoplay: false # 是否自动播放
+  theme: '#42b983'
+  loop: 'all' # 音频循环播放, 可选值: 'all', 'one', 'none'
+  order: 'list' # 音频循环顺序, 可选值: 'list', 'random'
+  preload: 'auto' # 预加载，可选值: 'none', 'metadata', 'auto'
+  volume: 0.7 # 默认音量，请注意播放器会记忆用户设置，用户手动设置音量后默认音量即失效
+  listFolded: false # 列表默认折叠
+  listMaxHeight: # 列表最大高度
