@@ -162,8 +162,13 @@ mark {
     margin-bottom: 0;
 }
 
-.bg-color {
+
+/* 默认顶部条颜色 修改于2019-05-06 */
+/* .bg-color {
     background-image: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
+} */
+.bg-color {
+    background-image: linear-gradient(to right, #bc8745 0%, #f663ac 100%);
 }
 
 .text-color {
