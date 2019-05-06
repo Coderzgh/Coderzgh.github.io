@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>文章title</title>
+      <link href="/2019/05/06/title/"/>
+      <url>/2019/05/06/title/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Markdown </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Typora </tag>
+            
+            <tag> Markdown </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>重新更新这个博客-2018-12-04</title>
       <link href="/2019/05/05/hello-world/"/>
       <url>/2019/05/05/hello-world/</url>
