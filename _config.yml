@@ -79,11 +79,17 @@ theme: hexo-theme-matery
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+# deploy:
+#   type: git
+#   repo: git@github.com:Coderzgh/Coderzgh.github.io.git
+#   branch: master
+
+
 deploy:
   type: git
-  repo: git@github.com:Coderzgh/Coderzgh.github.io.git
-  branch: master
-
+  repository: 
+    github: ssh://git@github.com:Coderzgh/Coderzgh.github.io.git,master
+    gitee: git@gitee.com:coderzgh/hexo.git,master
 
 #plugin  自己添加插件
 
