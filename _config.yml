@@ -84,12 +84,20 @@ theme: hexo-theme-matery
 #   repo: git@github.com:Coderzgh/Coderzgh.github.io.git
 #   branch: master
 
-
 deploy:
-  type: git
-  repo: 
-    github: git@github.com:Coderzgh/Coderzgh.github.io.git,master
-    gitee: git@gitee.com:coderzgh/hexo.git,master
+  - type: git
+    repo: git@github.com:Coderzgh/Coderzgh.github.io.git
+    branch: master
+  - type: git
+    repo: git@gitee.com:coderzgh/Coderzgh.github.io.git
+    branch: master
+
+
+# deploy:
+#   type: git
+#   repo: 
+#     github: git@github.com:Coderzgh/Coderzgh.github.io.git,master
+#     gitee: git@gitee.com:coderzgh/hexo.git,master
 
 #plugin  自己添加插件
 
