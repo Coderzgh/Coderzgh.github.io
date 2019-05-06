@@ -87,8 +87,8 @@ theme: hexo-theme-matery
 
 deploy:
   type: git
-  repository: 
-    github: ssh://git@github.com:Coderzgh/Coderzgh.github.io.git,master
+  repo: 
+    github: git@github.com:Coderzgh/Coderzgh.github.io.git,master
     gitee: git@gitee.com:coderzgh/hexo.git,master
 
 #plugin  自己添加插件
