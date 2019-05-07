@@ -15,7 +15,7 @@ timezone:
 # url: http://Coderzgh.github.io
 # root: /
 
-url: https://coderzgh.gitee.io/coderzgh.github.io
+url: http://yoursite.com
 root: /coderzgh.github.io/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
