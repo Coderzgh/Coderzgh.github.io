@@ -12,8 +12,11 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://Coderzgh.github.io
-root: /
+# url: http://Coderzgh.github.io
+# root: /
+
+url: https://coderzgh.gitee.io/coderzgh.github.io/
+root: /coderzgh.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
