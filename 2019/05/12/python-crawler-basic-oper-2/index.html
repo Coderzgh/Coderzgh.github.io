@@ -4,8 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="重新更新这个博客-2018-12-04, 苦乐随缘">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="Python网络爬虫实战之二：环境部署、基础语法、文件操作, 苦乐随缘">
+    <meta name="description" content="一、Python的环境部署Python安装、Python的IDE安装本文不再赘述，网上有很多教程
+爬虫必备的几个库：Requests、Selenium、lxml、Beatiful Soup
+
+Requests 是基于urllib编写的第三方">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>重新更新这个博客-2018-12-04 | 苦乐随缘</title>
+    <title>Python网络爬虫实战之二：环境部署、基础语法、文件操作 | 苦乐随缘</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +260,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/source/images/xxx.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        重新更新这个博客-2018-12-04
+                        Python网络爬虫实战之二：环境部署、基础语法、文件操作
                     </div>
                 </div>
             </div>
@@ -273,111 +276,35 @@
 
 
 
-<main class="post-container content">
+<main class="container content">
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 20px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
+    <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Python/" target="_blank">
+                                <span class="chip bg-color">Python</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Python/" class="post-category" target="_blank">
+                                Python
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -385,7 +312,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-05-05
+                    2019-05-12
                 </div>
 
                 
@@ -401,20 +328,117 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+                <h1 id="一、Python的环境部署"><a href="#一、Python的环境部署" class="headerlink" title="一、Python的环境部署"></a>一、Python的环境部署</h1><p>Python安装、Python的IDE安装本文不再赘述，网上有很多教程</p>
+<p>爬虫必备的几个库：Requests、Selenium、lxml、Beatiful Soup</p>
+<ul>
+<li>Requests 是基于urllib编写的第三方扩展库，是采用Apache2 Licensed开源协议的HTTP库</li>
+<li>Selenium是一个自动化测试工具，利用它我们可以驱动浏览器执行特定的动作，如点击、下拉等操作。对于一些JavaScript渲染的页面来说，这种抓取方式非常有效。</li>
+<li>lxml是Python的一个解析库，支持HTML和XML的解析，支持XPath解析方式，而且解析效率非常高</li>
+<li>Beatiful Soup是Python的一个HTML或XML的解析库，我们可以用它来方便地从网页中提取数据</li>
+</ul>
+<h1 id="二、Python的基础语法"><a href="#二、Python的基础语法" class="headerlink" title="二、Python的基础语法"></a>二、Python的基础语法</h1><p>可参考我的《趣学Python——教孩子学编程》系列笔记</p>
+<p><a href="https://www.jianshu.com/p/69b5c9ee926e" target="_blank" rel="noopener">《趣学Python——教孩子学编程》学习笔记第1-3章</a></p>
+<p><a href="https://www.jianshu.com/p/00850c80f78f" target="_blank" rel="noopener">《趣学Python——教孩子学编程》学习笔记第4-6章</a></p>
+<p><a href="https://www.jianshu.com/p/90d50cc592ed" target="_blank" rel="noopener">《趣学Python——教孩子学编程》学习笔记第7-8章</a></p>
+<p><a href="https://www.jianshu.com/p/885cb1fa9827" target="_blank" rel="noopener">《趣学Python——教孩子学编程》学习笔记第9-10章</a></p>
+<p><a href="https://www.jianshu.com/p/48715dcb524a" target="_blank" rel="noopener">《趣学Python——教孩子学编程》学习笔记第11-12章</a></p>
+<p><a href="https://www.jianshu.com/p/c9850ca89b60" target="_blank" rel="noopener">《趣学Python——教孩子学编程》学习笔记第13章</a></p>
+<h1 id="三、Python文件的读取与输出"><a href="#三、Python文件的读取与输出" class="headerlink" title="三、Python文件的读取与输出"></a>三、Python文件的读取与输出</h1><p>键盘输入</p>
+<pre><code># 键盘输入（python3将raw_input和input进行了整合，只有input）
+str = input(&quot;Please enter:&quot;)
+print(&quot;你输入的内容是：&quot;, str)
+</code></pre><p>打开文件</p>
+<pre><code># 打开一个文件
+fo = open(r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao.txt&quot;, &quot;wb&quot;)
+print(&quot;文件名：&quot;, fo.name)
+print(&quot;是否已关闭：&quot;, fo.closed)
+print(&quot;访问模式：&quot;, fo.mode)
+</code></pre><p>关闭文件</p>
+<pre><code># 关闭一个文件
+fo = open(r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao.txt&quot;, &quot;wb&quot;)
+fo.close()
+print(&quot;是否已关闭：&quot;, fo.closed)
+</code></pre><p>写入文件内容</p>
+<pre><code># 写入文件内容
+fo = open(r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao.txt&quot;, &quot;r+&quot;)
+fo.write(&quot;www.baidu.com www.cctvjiatao.com&quot;)
+fo.flush()
+fo.close()
+</code></pre><p>读取文件内容</p>
+<pre><code>fo = open(r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao.txt&quot;, &quot;r+&quot;)
+str = fo.read(11)
+print(&quot;读取的字符串是：&quot;, str)
+fo.close()
+</code></pre><p>查找当前位置</p>
+<pre><code># 查找当前位置
+fo = open(r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao.txt&quot;, &quot;r+&quot;)
+str = fo.read(11)
+position = fo.tell()
+print(&quot;当前读取的位置是：&quot;, position)
+# result: 当前文件位置： 11
+fo.close()
+</code></pre><p>文件指针重定位</p>
+<pre><code># 文件指针重定位
+fo = open(r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao.txt&quot;, &quot;r+&quot;)
+str = fo.read(11)
+print(&quot;读取的字符串1：&quot;, str)
+# result: 重新读取的字符串1： www.baidu.c
+position = fo.tell()
+print(&quot;当前文件位置：&quot;, position)
+# result: 当前文件位置： 11
+str = fo.read(11)
+print(&quot;读取的字符串2：&quot;, str)
+# result: 读取的字符串2： om www.cctv
+postion = fo.seek(0, 0)
+str = fo.read(11)
+print(&quot;读取的字符串3：&quot;, str)
+# result: 读取的字符串3： www.baidu.c
+fo.close()
+</code></pre><p>文件重命名</p>
+<pre><code># 文件重命名 filejiatao.txt——&gt;filejiatao2.txt
+import os
 
+src_file = r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao.txt&quot;
+dst_file = r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao2.txt&quot;
+os.rename(src_file, dst_file)
+</code></pre><p>删除文件</p>
+<pre><code># 删除一个文件
+import os
+
+dirty_file = r&quot;D:\DataguruPyhton\PythonSpider\lesson2\filejiatao2.txt&quot;
+os.remove(dirty_file)
+</code></pre><p> 异常处理1</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/2255795-71be88200641b051.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/627" alt="img"></p>
+<p>2-1.jpg</p>
+<pre><code># 异常处理1
+try:
+    fh = open(&quot;testfile.txt&quot;, &quot;w&quot;)
+    fh.write(&quot;this is my test file for exception handing!&quot;)
+except IOError:
+    print(&quot;Eorror:can\&#39;t find file or read data&quot;)
+else:
+    print(&quot;witten content in the file successfully&quot;)
+    fh.close()
+</code></pre><p>异常处理2</p>
+<pre><code># 异常处理2
+try:
+    fh = open(&quot;testfile.txt&quot;, &quot;w&quot;)
+    fh.write(&quot;this is my test file for exception handing!&quot;)
+finally:
+    print(&quot;Eorror:I don\&#39;t kown why ...&quot;)
+</code></pre><p>异常处理3</p>
+<pre><code># 异常处理3
+def temp_convert(var):
+    try:
+        return int(var)
+    # except ValueError,Argument:
+    #     print(&quot;The argument does not contain numbers\n&quot;,Argument)
+    except (ValueError) as Argument:
+        print(&quot;The argument does not contain numbers\n&quot;, Argument)
+
+
+temp_convert(&quot;xyz&quot;)
+</code></pre>
             </div>
             <hr>
 
@@ -561,7 +585,7 @@
                     </span>
                     <a href="http://Coderzgh.github.io" class="b-link-green">苦乐随缘</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/05/05/hello-world/" class="b-link-green">重新更新这个博客-2018-12-04</a>
+                    <a href="/2019/05/12/python-crawler-basic-oper-2/" class="b-link-green">Python网络爬虫实战之二：环境部署、基础语法、文件操作</a>
                 </p>
             </div>
         </div>
@@ -586,30 +610,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/05/06/title/">
+                <a href="/2019/05/13/python-crawler-urllib-requests-3/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="文章title">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之三：基本工具库urllib和requests">
                         
-                        <span class="card-title">文章title</span>
+                        <span class="card-title">Python网络爬虫实战之三：基本工具库urllib和requests</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            这是你自定义的文章摘要内容，如果这个属性有值，文章卡片摘要就显示这段文字，否则程序会自动截取文章的部分内容作为摘要
+                            Python网络爬虫实战之三：基本工具库urllib和requests一、urlliburllib简介urllib是Python中一个功能强大用于操作URL，并在爬虫时经常用到的一个基础库，无需额外安装，默认已经安装到python中。
+ur
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-06
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-13
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Markdown/" class="post-category" target="_blank">
-                                    Markdown
+                            <a href="/categories/Python/" class="post-category" target="_blank">
+                                    Python
                                 </a>
                             
                             
@@ -619,12 +644,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Typora/" target="_blank">
-                        <span class="chip bg-color">Typora</span>
+                    <a href="/tags/Python/" target="_blank">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
-                    <a href="/tags/Markdown/" target="_blank">
-                        <span class="chip bg-color">Markdown</span>
+                    <a href="/tags/requests/" target="_blank">
+                        <span class="chip bg-color">requests</span>
+                    </a>
+                    
+                    <a href="/tags/urllib/" target="_blank">
+                        <span class="chip bg-color">urllib</span>
                     </a>
                     
                 </div>
@@ -635,37 +664,52 @@
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/05/05/hello-world/">
+                <a href="/2019/05/11/python-crawler-basic-internet-1/">
                     <div class="card-image">
                         
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之一：网络爬虫理论基础">
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="重新更新这个博客-2018-12-04">
-                        
-                        <span class="card-title">重新更新这个博客-2018-12-04</span>
+                        <span class="card-title">Python网络爬虫实战之一：网络爬虫理论基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+                            一、浏览网页的基本过程和通信基础
+当我们在浏览器地址栏输入： http://www.baidu.com 回车后会浏览器显示百度的首页，那这 段网络通信过程中到底发生了什么？
+
+简单来说这段过程发生了以下四个步骤：
+
+浏览器通过DNS服务器查
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-05
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-11
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-user fa-fw"></i>
-                            Demo
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Python/" class="post-category" target="_blank">
+                                    Python
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Python/" target="_blank">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -676,99 +720,6 @@
 
 
 
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fa fa-list"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            // headingsOffset: -205,
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).slideUp(500);
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).slideDown(500);
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
     
 
 </main>
