@@ -5,12 +5,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Python网络爬虫实战之一：网络爬虫理论基础, 苦乐随缘">
-    <meta name="description" content="一、浏览网页的基本过程和通信基础
-当我们在浏览器地址栏输入： http://www.baidu.com 回车后会浏览器显示百度的首页，那这 段网络通信过程中到底发生了什么？
-
-简单来说这段过程发生了以下四个步骤：
-
-浏览器通过DNS服务器查">
+    <meta name="description" content="什么是 Shodan？首先，Shodan 是一个搜索引擎，但它与 Google 这种搜索网址的搜索引擎不同，Shodan 是用来搜索网络空间中在线设备的，你可以通过 Shodan 搜索指定的设备，或者搜索特定类型的设备，其中 Shodan ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -330,103 +325,155 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一、浏览网页的基本过程和通信基础"><a href="#一、浏览网页的基本过程和通信基础" class="headerlink" title="一、浏览网页的基本过程和通信基础"></a>一、浏览网页的基本过程和通信基础</h1><blockquote>
-<p>当我们在浏览器地址栏输入： <a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a> 回车后会浏览器显示百度的首页，那这 段网络通信过程中到底发生了什么？</p>
-</blockquote>
-<p>简单来说这段过程发生了以下四个步骤：</p>
-<ol>
-<li>浏览器通过DNS服务器查找域名对应的IP地址;</li>
-<li>向IP地址对应的Web服务器发送请求 ;</li>
-<li>Web Web服务器响应请求，发回HTML页面 ;</li>
-<li>浏览器解析HTML内容，并显示出来</li>
-</ol>
-<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><ul>
-<li>DNS 是计算机域名系统 (Domain Name System (Domain Name System 或 Domain Name Service) 的缩写，由解析器和域名服务组成的。</li>
-<li>域名服务器是指保存有该网络中所主机的和对应 IP 地址，并具有将域名转换为 IP 地址功能的服务器。</li>
-<li>一般个域名的DNS解析时间在10~60毫秒之间。</li>
-<li>一个域名必须对应IP地址，而一个IP地址不一定会有域名</li>
-</ul>
-<h3 id="HTTP和HTTPS"><a href="#HTTP和HTTPS" class="headerlink" title="HTTP和HTTPS"></a>HTTP和HTTPS</h3><ul>
-<li>HTTP协议（HyperText Transfer Protocol，超文本传输协议）是一种发布和接收HTML页面的方法</li>
-<li>HTTPS协议（HyperText Transfer Protocol over Secure Socket Layer）简单的讲就是HTTP的安全版，在HTTP下加入SSL层</li>
-<li>SSL（Secure Socket Layer 安全套接层）主要用于Web的安全传输协议，在传输层对网络连接进行加密，保障在Internet上数据传输的安全</li>
-<li>HTTP的端口号是80，HTTPS的端口号是443</li>
-</ul>
-<h3 id="URI与URL"><a href="#URI与URL" class="headerlink" title="URI与URL"></a>URI与URL</h3><ul>
-<li>URI（Uniform Resource Identifier）统一资源标志符</li>
-<li>URL（Universal Resource Locator）统一资源定位符，用于完整地描述Internet上网页和其他资源的地址的一中标识方法</li>
-<li>URL的基本格式：<a href="scheme://host[:port]/path/.../[?query-string][#anchor]" target="_blank" rel="noopener">scheme://host[:port]/path/.../[?query-string][#anchor]</a> </li>
-</ul>
-<h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><p>请求由客户端向服务端发出，分为四部分：请求方法、请求的网址、请求头、请求体</p>
+                <h2 id="什么是-Shodan？"><a href="#什么是-Shodan？" class="headerlink" title="什么是 Shodan？"></a>什么是 Shodan？</h2><p>首先，Shodan 是一个搜索引擎，但它与 Google 这种搜索网址的搜索引擎不同，Shodan 是用来搜索网络空间中在线设备的，你可以通过 Shodan 搜索指定的设备，或者搜索特定类型的设备，其中 Shodan 上最受欢迎的搜索内容是：webcam，linksys，cisco，netgear，SCADA等等。</p>
+<p><strong>那么 Shodan 是怎么工作的呢？Shodan 通过扫描全网设备并抓取解析各个设备返回的 banner 信息，通过了解这些信息 Shodan 就能得知网络中哪一种 Web 服务器是最受欢迎的，或是网络中到底存在多少可匿名登录的 FTP 服务器。</strong></p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>这里就像是用 Google 一样，在主页的搜索框中输入想要搜索的内容即可，例如下面我搜索 “SSH”：</p>
+<p><a href="http://image.3001.net/images/20161128/14803149659337.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803149659337.png!small" alt="27-1.png"></a></p>
+<p>上图的搜索结果包含两个部分，左侧是大量的汇总数据包括：</p>
 <ul>
-<li>请求方法</li>
+<li>Results map – 搜索结果展示地图</li>
+<li>Top services (Ports) – 使用最多的服务/端口</li>
+<li>Top organizations (ISPs) – 使用最多的组织/ISP</li>
+<li>Top operating systems – 使用最多的操作系统</li>
+<li>Top products (Software name) – 使用最多的产品/软件名称</li>
 </ul>
-<p>  <img src="https:////upload-images.jianshu.io/upload_images/2255795-fe7eace52135769d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/751" alt="img"></p>
-<p>  1-1.jpg</p>
+<p>随后，在中间的主页面我们可以看到包含如下的搜索结果：</p>
 <ul>
-<li>请求头，用来说明服务器使用的附加信息，比较重要的信息有Cookie、Referer、user-Agent等。</li>
+<li>IP 地址</li>
+<li>主机名</li>
+<li>ISP</li>
+<li>该条目的收录收录时间</li>
+<li>该主机位于的国家</li>
+<li>Banner 信息</li>
 </ul>
-<p>  <img src="https:////upload-images.jianshu.io/upload_images/2255795-76c4af1982a66838.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/773" alt="img"></p>
-<p>  1-2.jpg</p>
+<p>想要了解每个条目的具体信息，只需要点击每个条目下方的 details 按钮即可。此时，URL 会变成这种格式 <code>https://www.shodan.io/host/[IP]</code>，所以我们也可以通过直接访问指定的 IP 来查看详细信息。</p>
+<p><a href="http://image.3001.net/images/20161128/14803149873250.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803149873250.png!small" alt="27-2.png"></a></p>
+<p>上图中我们可以从顶部在地图中看到主机的物理地址，从左侧了解到主机的相关信息，右侧则包含目标主机的端口列表及其详细信息。</p>
+<h3 id="使用搜索过滤"><a href="#使用搜索过滤" class="headerlink" title="使用搜索过滤"></a>使用搜索过滤</h3><p>如果像前面单纯只使用关键字直接进行搜索，搜索结果可能不尽人意，那么此时我们就需要使用一些特定的命令对搜索结果进行过滤，常见用的过滤命令如下所示：</p>
 <ul>
-<li>请求体，一般承载的内容是POST请求中的表单数据，而对于GET请求，请求体则为空。</li>
+<li><code>hostname</code>：搜索指定的主机或域名，例如 <code>hostname:&quot;google&quot;</code></li>
+<li><code>port</code>：搜索指定的端口或服务，例如 <code>port:&quot;21&quot;</code></li>
+<li><code>country</code>：搜索指定的国家，例如 <code>country:&quot;CN&quot;</code></li>
+<li><code>city</code>：搜索指定的城市，例如 <code>city:&quot;Hefei&quot;</code></li>
+<li><code>org</code>：搜索指定的组织或公司，例如 <code>org:&quot;google&quot;</code></li>
+<li><code>isp</code>：搜索指定的ISP供应商，例如 <code>isp:&quot;China Telecom&quot;</code></li>
+<li><code>product</code>：搜索指定的操作系统/软件/平台，例如 <code>product:&quot;Apache httpd&quot;</code></li>
+<li><code>version</code>：搜索指定的软件版本，例如 <code>version:&quot;1.6.2&quot;</code></li>
+<li><code>geo</code>：搜索指定的地理位置，参数为经纬度，例如 <code>geo:&quot;31.8639, 117.2808&quot;</code></li>
+<li><code>before/after</code>：搜索指定收录时间前后的数据，格式为dd-mm-yy，例如 <code>before:&quot;11-11-15&quot;</code></li>
+<li><code>net</code>：搜索指定的IP地址或子网，例如 <code>net:&quot;210.45.240.0/24&quot;</code></li>
 </ul>
-<p>  <img src="https:////upload-images.jianshu.io/upload_images/2255795-569c648c2c6d1f89.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/819" alt="img"></p>
-<p>  1-3.jpg</p>
-<h3 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h3><p>响应由服务端返回给客户端，分为三部分：响应状态码、响应头、响应提</p>
-<ul>
-<li>响应状态码</li>
-</ul>
-<p>  <img src="https:////upload-images.jianshu.io/upload_images/2255795-5804a72cba62b6fd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
-<p>  1-4.jpg</p>
-<ul>
-<li>响应头，包含了服务器对请求的应答信息，如Content-Type、Server、Set-Cookie等。</li>
-</ul>
-<p>  <img src="https:////upload-images.jianshu.io/upload_images/2255795-a61e4fb72096b27e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
-<p>  1-4.jpg</p>
-<ul>
-<li>响应体，响应的正文数据都在响应体中，比如请求网页时他的响应体就是网页的HTML代码，请求一张图片时，它的响应体就是图片的二进制数据。我们做爬虫请求网页后，要解析的就是响应体</li>
-</ul>
-<h1 id="二、爬虫基本工作原理"><a href="#二、爬虫基本工作原理" class="headerlink" title="二、爬虫基本工作原理"></a>二、爬虫基本工作原理</h1><h3 id="爬虫基本类型"><a href="#爬虫基本类型" class="headerlink" title="爬虫基本类型"></a>爬虫基本类型</h3><ul>
-<li>通用爬虫：是 捜索引擎抓取系统（Baidu、Google、Yahoo等）的重要组成部分。主要目的是将互联网上的网页下载到本地，形成一个互联网内容的镜像备份。</li>
-<li>聚焦爬虫：是”面向特定主题需求”的一种网络爬虫程序，它与通用搜索引擎爬虫的区别在于， 聚焦爬虫在实施网页抓取时会对内容进行处理筛选，尽量保证只抓取与需求相关的网页信息。</li>
-<li>增量式爬虫：增量式更新指的是在更新的时候只更新改变的地方，而未改变的地方则不更新。所以增量式爬虫技术在爬取网页的过程中，只爬取内容发生变化或是新产生的网页，对未发生内容变化的网页则不会爬取。</li>
-</ul>
-<h3 id="爬虫的基本工作流程（以通用爬虫为例）"><a href="#爬虫的基本工作流程（以通用爬虫为例）" class="headerlink" title="爬虫的基本工作流程（以通用爬虫为例）"></a>爬虫的基本工作流程（以通用爬虫为例）</h3><p><img src="https:////upload-images.jianshu.io/upload_images/2255795-cffe88e6b8b23391.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/265" alt="img"></p>
-<p>​      1-7.png</p>
-<h5 id="第一步：抓取网页"><a href="#第一步：抓取网页" class="headerlink" title="第一步：抓取网页"></a>第一步：抓取网页</h5><ul>
-<li>首先选取一部分的种子URL，将这些URL放入待抓取URL队列；</li>
-<li>取出待抓取URL，解析DNS得到主机的IP，并将URL对应的网页下载下来，存储进已下载网页库中，并且将这些URL放进已抓取URL队列。</li>
-<li>分析已抓取URL队列中的URL，分析其中的其他URL，并且将URL放入待抓取URL队列，从而进入下一个循环</li>
-</ul>
-<h5 id="第二步：数据存储"><a href="#第二步：数据存储" class="headerlink" title="第二步：数据存储"></a>第二步：数据存储</h5><ul>
-<li>搜索引擎通过爬虫爬取到的网页，将数据存入原始页面数据库。其中的页面数据与用户浏览器得到的HTML是完全一样的。</li>
-<li>搜索引擎蜘蛛在抓取页面时，也做一定的重复内容检测，一旦遇到访问权重很低的网站上有大量抄袭、采集或者复制的内容，很可能就不再爬行。</li>
-</ul>
-<h5 id="第三步：预处理"><a href="#第三步：预处理" class="headerlink" title="第三步：预处理"></a>第三步：预处理</h5><ul>
-<li>搜索引擎将爬虫抓取回来的页面，进行各种步骤的预处理，比如：提取文字、中文分词、消除噪音（比如版权声明文字、导航条、广告等……）、索引处理、链接关系计算、特殊文件处理….</li>
-<li>除了HTML文件外，搜索引擎通常还能抓取和索引以文字为基础的多种文件类型，如 PDF、Word、WPS、XLS、PPT、TXT 文件等。我们在搜索结果中也经常会看到这些文件类型。</li>
-<li>但搜索引擎还不能处理图片、视频、Flash 这类非文字内容，也不能执行脚本和程序。</li>
-</ul>
-<h5 id="第四步：操作数据，实现需求"><a href="#第四步：操作数据，实现需求" class="headerlink" title="第四步：操作数据，实现需求"></a>第四步：操作数据，实现需求</h5><p>比如获取京东某类商品的所有评论、购买用户的会员等级</p>
-<h3 id="爬虫基本结构"><a href="#爬虫基本结构" class="headerlink" title="爬虫基本结构"></a>爬虫基本结构</h3><p><img src="https:////upload-images.jianshu.io/upload_images/2255795-f1dc7e8061ac95ed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/813" alt="img"></p>
-<p>1-6.jpg</p>
-<h3 id="爬虫的抓取策略"><a href="#爬虫的抓取策略" class="headerlink" title="爬虫的抓取策略"></a>爬虫的抓取策略</h3><ul>
-<li>深度优先遍历策略</li>
-<li>广度优先遍历策略</li>
-<li>方向链接策略</li>
-<li>Partial PageRank 策略</li>
-<li>OPIC策略</li>
-</ul>
-<h3 id="爬虫的更新策略"><a href="#爬虫的更新策略" class="headerlink" title="爬虫的更新策略"></a>爬虫的更新策略</h3><ul>
-<li>历史参考策略</li>
-<li>用户体验策略</li>
-<li>聚类抽样策略</li>
-</ul>
-<h3 id="网页分析算法"><a href="#网页分析算法" class="headerlink" title="网页分析算法"></a>网页分析算法</h3><ul>
-<li>基于用户行为的网页分析算法</li>
-<li>基于网络拓扑的网页分析算法</li>
-<li>基于网页内容的网页分析算法</li>
+<h3 id="搜索实例"><a href="#搜索实例" class="headerlink" title="搜索实例"></a>搜索实例</h3><p>查找位于合肥的 Apache 服务器：</p>
+<pre><code>apache city:&quot;Hefei&quot;
+</code></pre><p>查找位于国内的 Nginx 服务器：</p>
+<pre><code>nginx country:&quot;CN&quot;
+</code></pre><p>查找 GWS(Google Web Server) 服务器：</p>
+<pre><code>&quot;Server: gws&quot; hostname:&quot;google&quot;
+</code></pre><p>查找指定网段的华为设备：</p>
+<pre><code>huawei net:&quot;61.191.146.0/24&quot;
+</code></pre><p>如上通过在基本关键字后增加指定的过滤关键字，能快速的帮助发现我们感兴趣的内容。当然，还有更快速更有意思的方法，那就是点击 Shodan 搜索栏右侧的 “Explore” 按钮，就会得到很多别人分享的搜索语法，你问我别人分享的语法有什么好玩的？那咱们就随便来看看吧：</p>
+<p><a href="http://image.3001.net/images/20161128/14803150204500.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803150204500.png!small" alt="27-3.png"></a></p>
+<p>咱们随便选取一个名为“NetSureveillance Web”的用户分享语法，从下面的描述信息我们基本就能得知这就是一个弱密码的漏洞，为了方便测试让我们把语法在增加一个国家的过滤信息，最终语法如下：</p>
+<pre><code>Server: uc-httpd 1.0.0 200 OK Country:&quot;CN&quot;
+</code></pre><p><a href="http://image.3001.net/images/20161128/14803150355281.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803150355281.png!small" alt="27-4.png"></a></p>
+<p>现在让我们随便选取一个页面进去输入，使用admin账号和空密码就能顺利进入了：）</p>
+<p><a href="http://image.3001.net/images/20161128/1480315053949.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/1480315053949.png!small" alt="27-5.png"></a></p>
+<h3 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h3><p>Shodan 不仅可以查找网络设备，它还具有其他相当不错的功能。</p>
+<p>Exploits：每次查询完后，点击页面上的 “Exploits” 按钮，Shodan 就会帮我们查找针对不同平台、不同类型可利用的 exploits。当然也可以通过直接访问网址来自行搜索：<a href="https://exploits.shodan.io/welcome" target="_blank" rel="noopener">https://exploits.shodan.io/welcome</a>；</p>
+<p><a href="http://image.3001.net/images/20161128/14803151039105.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803151039105.png!small" alt="27-10.png"></a></p>
+<p>地图：每次查询完后，点击页面上的 “Maps” 按钮，Shodan 会将查询结果可视化的展示在地图当中；</p>
+<p><a href="http://image.3001.net/images/20161128/14803151185705.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803151185705.png!small" alt="27-12.png"></a></p>
+<p>报表：每次查询完后，点击页面上的 “Create Report” 按钮，Shodan 就会帮我们生成一份精美的报表，这是天天要写文档兄弟的一大好帮手啊；</p>
+<p><a href="http://image.3001.net/images/20161128/14803151323230.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803151323230.png!small" alt="27-11.png"></a></p>
+<h2 id="命令行下使用-Shodan"><a href="#命令行下使用-Shodan" class="headerlink" title="命令行下使用 Shodan"></a>命令行下使用 Shodan</h2><p><code>Shodan</code> 是由官方提供的 Python 库的，项目位于：<a href="https://github.com/achillean/shodan-python" target="_blank" rel="noopener">https://github.com/achillean/shodan-python</a></p>
+<p><strong>安装</strong></p>
+<pre><code>pip install shodan
+</code></pre><p>或者</p>
+<pre><code>git clone https://github.com/achillean/shodan-python.git &amp;&amp; cd shodan-python
+python setup.py install
+</code></pre><p>安装完后我们先看下帮助信息：</p>
+<pre><code>➜  ~ shodan -h
+Usage: shodan [OPTIONS] COMMAND [ARGS]...
+Options:
+  -h, --help  Show this message and exit.
+Commands:
+  alert       Manage the network alerts for your account  # 管理账户的网络提示
+  convert     Convert the given input data file into a...  # 转换输入文件
+  count       Returns the number of results for a search  # 返回查询结果数量
+  download    Download search results and save them in a...  # 下载查询结果到文件
+  honeyscore  Check whether the IP is a honeypot or not.  # 检查 IP 是否为蜜罐
+  host        View all available information for an IP...  # 显示一个 IP 所有可用的详细信息
+  info        Shows general information about your account  # 显示账户的一般信息
+  init        Initialize the Shodan command-line  # 初始化命令行
+  myip        Print your external IP address  # 输出用户当前公网IP
+  parse       Extract information out of compressed JSON...  # 解析提取压缩的JSON信息，即使用download下载的数据
+  scan        Scan an IP/ netblock using Shodan.  # 使用 Shodan 扫描一个IP或者网段
+  search      Search the Shodan database  # 查询 Shodan 数据库
+  stats       Provide summary information about a search...  # 提供搜索结果的概要信息
+  stream      Stream data in real-time.  # 实时显示流数据
+</code></pre><h3 id="常用示例"><a href="#常用示例" class="headerlink" title="常用示例"></a>常用示例</h3><p><strong>init</strong></p>
+<p>初始化命令行工具。</p>
+<pre><code>➜  ~ shodan init [API_Key]
+Successfully initialized
+</code></pre><p><strong>count</strong> </p>
+<p>返回查询的结果数量。</p>
+<pre><code>➜  ~ shodan count microsoft iis 6.0
+575862
+</code></pre><p><strong>download</strong> </p>
+<p>将搜索结果下载到一个文件中，文件中的每一行都是 JSON 格式存储的目标 banner 信息。默认情况下，该命令只会下载1000条结果，如果想下载更多结果需要增加 <code>--limit</code> 参数。</p>
+<p><a href="http://image.3001.net/images/20161128/14803151703857.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803151703857.png!small" alt="27-6.png"></a></p>
+<p><strong>parse</strong></p>
+<p>我们可以使用 parse 来解析之前下载数据，它可以帮助我们过滤出自己感兴趣的内容，也可以用来将下载的数据格式从 JSON 转换成 CSV 等等其他格式，当然更可以用作传递给其他处理脚本的管道。例如，我们想将上面下载的数据以CSV格式输出IP地址、端口号和组织名称：</p>
+<pre><code>➜  ~ shodan parse --fields ip_str,port,org --separator , microsoft-data.json.gz
+</code></pre><p><a href="http://image.3001.net/images/20161128/1480315189686.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/1480315189686.png!small" alt="27-7.png"></a></p>
+<p><strong>host</strong></p>
+<p>查看指定主机的相关信息，如地理位置信息，开放端口，甚至是否存在某些漏洞等信息。</p>
+<p><a href="http://image.3001.net/images/20161128/14803152025933.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803152025933.png!small" alt="27-8.png"></a></p>
+<p><strong>search</strong></p>
+<p>直接将查询结果展示在命令行中，默认情况下只显示IP、端口号、主机名和HTTP数据。当然我们也可以通过使用 –fields 来自定义显示内容，例如，我们只显示IP、端口号、组织名称和主机名：</p>
+<pre><code>➜  ~ shodan search --fields ip_str,port,org,hostnames microsoft iis 6.0
+</code></pre><p><a href="http://image.3001.net/images/20161128/14803152181807.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803152181807.png!small" alt="27-9.png"></a></p>
+<h2 id="代码中使用-Shodan-库"><a href="#代码中使用-Shodan-库" class="headerlink" title="代码中使用 Shodan 库"></a>代码中使用 Shodan 库</h2><p>还是使用上一节讲到的 <a href="https://github.com/achillean/shodan-python" target="_blank" rel="noopener"><code>shodan</code></a> 库，安装方式这里不在阐述了。同样的，在使用 <code>shodan</code> 库之前需要初始化连接 API，代码如下：</p>
+<pre><code>import shodan
+SHODAN_API_KEY = &quot;API_Key&quot;
+api = shodan.Shodan(SHODAN_API_KEY)
+</code></pre><p>随后，我们就可以搜索数据了，示例代码片如下：</p>
+<pre><code>try:
+    # 搜索 Shodan
+    results = api.search(&#39;apache&#39;)
+    # 显示结果
+    print &#39;Results found: %s&#39; % results[&#39;total&#39;]
+    for result in results[&#39;matches&#39;]:
+            print result[&#39;ip_str&#39;]
+except shodan.APIError, e:
+    print &#39;Error: %s&#39; % e
+</code></pre><p><a href="http://image.3001.net/images/20161128/14803152351577.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20161128/14803152351577.png!small" alt="27-13.png"></a></p>
+<p>这里 <code>Shodan.search()</code> 会返回类似如下格式的 JSON 数据：</p>
+<pre><code>{
+        &#39;total&#39;: 8669969,
+        &#39;matches&#39;: [
+                {
+                        &#39;data&#39;: &#39;HTTP/1.0 200 OK\r\nDate: Mon, 08 Nov 2010 05:09:59 GMT\r\nSer...&#39;,
+                        &#39;hostnames&#39;: [&#39;pl4t1n.de&#39;],
+                        &#39;ip&#39;: 3579573318,
+                        &#39;ip_str&#39;: &#39;89.110.147.239&#39;,
+                        &#39;os&#39;: &#39;FreeBSD 4.4&#39;,
+                        &#39;port&#39;: 80,
+                        &#39;timestamp&#39;: &#39;2014-01-15T05:49:56.283713&#39;
+                },
+                ...
+        ]
+}
+</code></pre><h3 id="常用-Shodan-库函数"><a href="#常用-Shodan-库函数" class="headerlink" title="常用 Shodan 库函数"></a>常用 Shodan 库函数</h3><ul>
+<li><code>shodan.Shodan(key)</code> ：初始化连接API</li>
+<li><code>Shodan.count(query, facets=None)</code>：返回查询结果数量</li>
+<li><code>Shodan.host(ip, history=False)</code>：返回一个IP的详细信息</li>
+<li><code>Shodan.ports()</code>：返回Shodan可查询的端口号</li>
+<li><code>Shodan.protocols()</code>：返回Shodan可查询的协议</li>
+<li><code>Shodan.services()</code>：返回Shodan可查询的服务</li>
+<li><code>Shodan.queries(page=1, sort=&#39;timestamp&#39;, order=&#39;desc&#39;)</code>：查询其他用户分享的查询规则</li>
+<li><code>Shodan.scan(ips, force=False)</code>：使用Shodan进行扫描，ips可以为字符或字典类型</li>
+<li><code>Shodan.search(query, page=1, limit=None, offset=None, facets=None, minify=True)</code>：查询Shodan数据</li>
 </ul>
 
             </div>
@@ -575,7 +622,7 @@
                     </span>
                     <a href="http://Coderzgh.github.io" class="b-link-green">苦乐随缘</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/05/11/python-crawler-basic-internet-1/" class="b-link-green">Python网络爬虫实战之一：网络爬虫理论基础</a>
+                    <a href="/2019/05/11/how-shodan/" class="b-link-green">Python网络爬虫实战之一：网络爬虫理论基础</a>
                 </p>
             </div>
         </div>
@@ -600,26 +647,28 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/05/12/python-crawler-basic-oper-2/">
+                <a href="/2019/05/11/python-crawler-basic-internet-1/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之二：环境部署、基础语法、文件操作">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之一：网络爬虫理论基础">
                         
-                        <span class="card-title">Python网络爬虫实战之二：环境部署、基础语法、文件操作</span>
+                        <span class="card-title">Python网络爬虫实战之一：网络爬虫理论基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、Python的环境部署Python安装、Python的IDE安装本文不再赘述，网上有很多教程
-爬虫必备的几个库：Requests、Selenium、lxml、Beatiful Soup
+                            一、浏览网页的基本过程和通信基础
+当我们在浏览器地址栏输入： http://www.baidu.com 回车后会浏览器显示百度的首页，那这 段网络通信过程中到底发生了什么？
 
-Requests 是基于urllib编写的第三方
+简单来说这段过程发生了以下四个步骤：
+
+浏览器通过DNS服务器查
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-12
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-11
                         </span>
                         <span class="publish-author">
                             
@@ -648,7 +697,7 @@ Requests 是基于urllib编写的第三方
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
             </div>
             <div class="card">
                 <a href="/2019/05/11/how-shodan/">
@@ -681,6 +730,7 @@ Requests 是基于urllib编写的第三方
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
