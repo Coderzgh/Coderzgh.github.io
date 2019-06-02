@@ -4,12 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="使用fiddler对手机上的程序进行抓包, 苦乐随缘">
+    <meta name="keywords" content="【Fiddler为所欲为第四篇】直播源抓取与接口分析, 苦乐随缘">
     <meta name="description" content="
-用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。
-
-前提：  1.必须确保安装fiddler的电脑和手机在同一个wifi环境下
-  备注：如果电脑用的是台式机，可以安装一个随身wifi，来确保台式机和手机在">
+今天的教程，主要是教大家如何进行“封包逆向”，关键词跳转，接口分析。（怎么样，是不是感觉和OD很像~~~）今天的教程我们以【麻花影视】为例，当然，其他APP的逻辑也是一样，通用的哦~首先需要做好准备工作：（所有APP的抓包都会用到以下工具">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>使用fiddler对手机上的程序进行抓包 | 苦乐随缘</title>
+    <title>【Fiddler为所欲为第四篇】直播源抓取与接口分析 | 苦乐随缘</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -267,7 +264,7 @@
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        使用fiddler对手机上的程序进行抓包
+                        【Fiddler为所欲为第四篇】直播源抓取与接口分析
                     </div>
                 </div>
             </div>
@@ -330,35 +327,11 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><h3 id="用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。"><a href="#用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。" class="headerlink" title="用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。"></a>用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。</h3></li>
+<li><p>今天的教程，主要是教大家如何进行“封包逆向”，关键词跳转，接口分析。（怎么样，是不是感觉和OD很像~~~）<br>今天的教程我们以【麻花影视】为例，当然，其他APP的逻辑也是一样，通用的哦~<br>首先需要做好准备工作：（所有APP的抓包都会用到以下工具，就不要再说抓不到证书的包啦。）<br>1、安卓模拟器，并进行root。（推荐使用MUMU模拟器），当然，安卓手机肯定没有问题。<br>2、安装XP框架（用模拟器可以自适应），链接：<a href="https://pan.baidu.com/s/1YfLpVQb1QophNO38alNdug" target="_blank" rel="noopener">https://pan.baidu.com/s/1YfLpVQb1QophNO38alNdug</a> 提取码：5m98<br>3、安装https HOST（基于XP框架），链接：<a href="https://pan.baidu.com/s/1PFidSyoAtHynxNPF4t-voA" target="_blank" rel="noopener">https://pan.baidu.com/s/1PFidSyoAtHynxNPF4t-voA</a> 提取码：0f2d<br>以上的准备工作必须要做，不然很多包是抓不到的！！！<br>FD的wifi代{过}{滤}理教程就不说啦，网上很多，我这里直接开始演示哦~<br>第一步：<br>首先，我们打开咪咕视频，找到想要抓的节目，并观察FD里面是否有数据。【我这里就以【CCTV1】为例】。<br><img src="https://attach.52pojie.cn/forum/201902/12/111630rlmlqowxl2luxzqw.png" alt="img"></p>
+<p><img src="https://attach.52pojie.cn/forum/201902/12/111710y5nasnq48y8xkwwq.png" alt="img"><br>若发现FD有数据，既表示正确，既可开始下一步。<br>第二步：<br>正常打开CCTV1，然后看FD里面的数据。<br><img src="https://attach.52pojie.cn/forum/201902/12/111905raeqtq7e6f4co4qe.png" alt="img"></p>
+<p><img src="https://attach.52pojie.cn/forum/201902/12/111906lvckovfec0e2dl2f.png" alt="img"><br>第三步：<br>过滤封包，将所有封包进行数据化。<br><img src="https://attach.52pojie.cn/forum/201902/12/112204dpmrlssbhpbhqq4x.png" alt="img"><br>第四步：<br>进行关键字查询，和OD的PUSH大法差不多，直播源的关键词是【m3u8】。首先我们需要查询咪咕视频的节目源是否是m3u8格式，因此搜索：m3u8，若出现黄色表示该请求含有m3u8.因此，我们需要看看这个封包。<br><img src="https://attach.52pojie.cn/forum/201902/12/112524yiqqjcjt0qjqggmp.png" alt="img"><br>第五步：<br>封包分析，通常非常多数据的则是ison，所以我们点击json。<br><img src="https://attach.52pojie.cn/forum/201902/12/112937n16cetee36ewngwg.png" alt="img"><br>通过Json，很明显，可以看得出来，这个play.miguvideo.com这个域名，返回了一个m3u8的地址。<br>url=<a href="http://gslbmgsplive.miguvideo.com/wd_r2/cctv/cctv1/600/index.m3u8?msisdn=10b1efdfd58919f4ccf07b3987d39131&amp;mdspid=&amp;spid=699004&amp;netType=4&amp;sid=2200291011&amp;pid=2028597139×tamp=20190212113218&amp;Channel_ID=25000502-99000-200300080100005&amp;ParentNodeID=-99&amp;assertID=2200291011&amp;client_ip=125.123.158.154&amp;SecurityKey=20190212113218&amp;imei=008796753773920&amp;promotionId=&amp;mvid=&amp;mcid=&amp;mpid=&amp;encrypt=4b4a040bf73d40d80a8974fdc095d593" target="_blank" rel="noopener">http://gslbmgsplive.miguvideo.com/wd_r2/cctv/cctv1/600/index.m3u8?msisdn=10b1efdfd58919f4ccf07b3987d39131&amp;mdspid=&amp;spid=699004&amp;netType=4&amp;sid=2200291011&amp;pid=2028597139×tamp=20190212113218&amp;Channel_ID=25000502-99000-200300080100005&amp;ParentNodeID=-99&amp;assertID=2200291011&amp;client_ip=125.123.158.154&amp;SecurityKey=20190212113218&amp;imei=008796753773920&amp;promotionId=&amp;mvid=&amp;mcid=&amp;mpid=&amp;encrypt=4b4a040bf73d40d80a8974fdc095d593</a><br>可以看出，这个m3u8，包含了很多参数，比如我们的IP信息。<br><img src="https://attach.52pojie.cn/forum/201902/12/113051dogmflkvvqqbxafv.png" alt="img"><br>第六部：<br>用VCL等播放工具，试试看能不能播放。若可以播放，则证明我们的播放地址是对的。因此，play.miguvideo.com则是播放地址的接口。<br><img src="https://attach.52pojie.cn/forum/201902/12/113430z21rrhr7x4418r4h.png" alt="img"><br>第七部：抓任意频道的接口。<br>我们用在FD命令下输入：bpater play.miguvideo.com<br><img src="https://attach.52pojie.cn/forum/201902/12/114232x1vvgb1adll92znl.png" alt="img"><br>然后回车。<br><img src="https://attach.52pojie.cn/forum/201902/12/114232su6uooiiz2o5mjo6.png" alt="img"><br>第八部：<br>点击任意频道，就可以自动下断点得到播放地址了。而且非常明显！<br><img src="https://attach.52pojie.cn/forum/201902/12/114406wag1ewrxgxrzmq9g.png" alt="img"></p>
+</li>
 </ul>
-<h4 id="前提："><a href="#前提：" class="headerlink" title="前提："></a><strong>前提：</strong></h4><p>  1.必须确保安装fiddler的电脑和手机在同一个wifi环境下</p>
-<p>  备注：如果电脑用的是台式机，可以安装一个随身wifi，来确保台式机和手机在同一wifi环境下</p>
-<p>  2.可以使用电脑安卓模拟器</p>
-<h4 id="安装配置步骤："><a href="#安装配置步骤：" class="headerlink" title="安装配置步骤："></a><strong>安装配置步骤：</strong></h4><h5 id="1-下载一个fiddler，网上随便下一个就可以了"><a href="#1-下载一个fiddler，网上随便下一个就可以了" class="headerlink" title="1.下载一个fiddler，网上随便下一个就可以了"></a>1.下载一个fiddler，网上随便下一个就可以了</h5><h5 id="2-配置fiddler"><a href="#2-配置fiddler" class="headerlink" title="2.配置fiddler"></a>2.配置fiddler</h5><p>  <strong>Tools-&gt;Fiddler Options-&gt;Connections</strong></p>
-<p>  <strong><img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120716187-103213269.png" alt="img"></strong></p>
-<p>  说明：1.Fiddler listens on port是手机连接fiddler时的代理端口号，默认8888即可</p>
-<p>  ​          2.Allow remote computers to connect是允许远程发送请求，需要勾上</p>
-<p>  <strong>Tools-&gt;Fiddler Options-&gt;HTTPS</strong></p>
-<p>  <strong><img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120733937-1858884840.png" alt="img"></strong></p>
-<p>  说明：勾上Decrypt HTTPS traffic，会抓到手机的https请求，如果想抓到https请求还需要在手机安装证书，下面会介绍</p>
-<p>  【fiddler设置后一定要把fiddler重启一下才会生效】</p>
-<h5 id="3-手机上的配置"><a href="#3-手机上的配置" class="headerlink" title="3.手机上的配置"></a>3.手机上的配置</h5><p>  3.1需要安装fiddler证书</p>
-<p>  使用手机浏览器访问http://【电脑IP地址】:【fiddler设置的端口号】，既可以下载fiddler的证书并安装</p>
-<p>  【查看电脑IP的方法，直接在cmd下ipconfig，或者鼠标滑过fiddler的online也可以看到IP地址】</p>
-<p>  <img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120802296-757506898.png" alt="img"></p>
-<p>  以上面看到的我的IP地址为例，手机只要访问<a href="http://10.252.167.91:8888即可下载安装fiddler证书" target="_blank" rel="noopener">http://10.252.167.91:8888即可下载安装fiddler证书</a></p>
-<p>  3.2手机设置wifi的代理</p>
-<p>  连接与电脑相同的wifi，修改wifi的网络，手动设置代理，代理服务器主机名为电脑的IP地址，代理端口为在fiddler里设置的端口号，保存后，fiddler将能够收到手机上的请求信息</p>
-<p>  <img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120829921-223800751.png" alt="img"></p>
-<p>  以上就是配置方法，其他的就可以直接用了，比如在fiddler里进行一下请求的过滤，只看某个服务器下的请求，配置后要点一下Actions来保存过滤</p>
-<p>  <img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120845093-525900958.png" alt="img"></p>
-<p>  在测试中可能会有测试环境，测试环境有的公司时域名相同，但是hosts不同，通过不同的服务器IP地址指向来确定是什么环境。在PC测试上可以非常方便的更改本机hosts指向来切换测试环境和线上环境，在手机上更改hosts比较麻烦。这时候就可以利用fiddler来连接手机，更改电脑的hosts，来实现手机连接测试环境的操作。</p>
-<p>  注意：</p>
-<p>  1.手机配置了代理，fiddler必须启动，手机才可以上网，如果fiddler关闭后手机是不可以联网了，需要将代理去掉才可以进行联网。</p>
-<p>  2.fiddler启东时，会默认将Internet的代理更改为127.0.0.1，在正常退出fiddler时代理会恢复为原来的代理。但是如果遇到fiddler不正常退出（比如进程直接杀掉），会导致代理没有恢复的情况，这是需要手动修改Internet的代理（恢复为原来的代理或者取消代理）</p>
-<p>  设置Internet代理的方法如下：</p>
-<p>  <img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120853421-360569062.png" alt="img"></p>
 
             </div>
             <hr>
@@ -506,7 +479,7 @@
                     </span>
                     <a href="http://Coderzgh.github.io" class="b-link-green">苦乐随缘</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/06/02/fiddler/" class="b-link-green">使用fiddler对手机上的程序进行抓包</a>
+                    <a href="/2019/06/02/fiddler-four/" class="b-link-green">【Fiddler为所欲为第四篇】直播源抓取与接口分析</a>
                 </p>
             </div>
         </div>
@@ -531,19 +504,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/06/02/fiddler-four/">
+                <a href="/2019/06/02/fiddler-three/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="【Fiddler为所欲为第四篇】直播源抓取与接口分析">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="【Fiddler为所欲为第三篇】封包逆向必备知识">
                         
-                        <span class="card-title">【Fiddler为所欲为第四篇】直播源抓取与接口分析</span>
+                        <span class="card-title">【Fiddler为所欲为第三篇】封包逆向必备知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-今天的教程，主要是教大家如何进行“封包逆向”，关键词跳转，接口分析。（怎么样，是不是感觉和OD很像~~~）今天的教程我们以【麻花影视】为例，当然，其他APP的逻辑也是一样，通用的哦~首先需要做好准备工作：（所有APP的抓包都会用到以下工具
+
+
+
+小A同学：会抓包有什么好学习的，不就用一个工具设置个wifi代{过}{滤}理就OK了嘛，还不是很多做不了。不如学习安卓逆向。 didi科学家：不好意思，抓包可以为所欲为。
+
+其实学习抓包，完完全全和OD是一模一样的逻辑，尤其是封包逆
                         
                     </div>
                     <div class="publish-info">
@@ -580,31 +558,34 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/05/19/python-crawler-static-sample-7/">
+                <a href="/2019/06/02/fiddler/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之七：动态网页爬取案例实战 Selenium + PhantomJS">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="使用fiddler对手机上的程序进行抓包">
                         
-                        <span class="card-title">Python网络爬虫实战之七：动态网页爬取案例实战 Selenium + PhantomJS</span>
+                        <span class="card-title">使用fiddler对手机上的程序进行抓包</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-正文：一、Selenium1、Selenium是什么Selenium 是什么？一句话，自动化测试工具。它支持各种浏览器，包括 Chrome，Safari，Firefox 等主流界面式浏览器，如果你在这些浏览器里面安装一个 Selenium
+用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。
+
+前提：  1.必须确保安装fiddler的电脑和手机在同一个wifi环境下
+  备注：如果电脑用的是台式机，可以安装一个随身wifi，来确保台式机和手机在
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-19
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Python/" class="post-category" target="_blank">
-                                    Python
+                            <a href="/categories/fiddler/" class="post-category" target="_blank">
+                                    fiddler
                                 </a>
                             
                             
@@ -614,16 +595,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python/" target="_blank">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                    <a href="/tags/Selenium/" target="_blank">
-                        <span class="chip bg-color">Selenium</span>
-                    </a>
-                    
-                    <a href="/tags/PhantomJS/" target="_blank">
-                        <span class="chip bg-color">PhantomJS</span>
+                    <a href="/tags/fiddler/" target="_blank">
+                        <span class="chip bg-color">fiddler</span>
                     </a>
                     
                 </div>

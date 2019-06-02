@@ -4,12 +4,14 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="使用fiddler对手机上的程序进行抓包, 苦乐随缘">
+    <meta name="keywords" content="【Fiddler为所欲为第三篇】封包逆向必备知识, 苦乐随缘">
     <meta name="description" content="
-用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。
 
-前提：  1.必须确保安装fiddler的电脑和手机在同一个wifi环境下
-  备注：如果电脑用的是台式机，可以安装一个随身wifi，来确保台式机和手机在">
+
+
+小A同学：会抓包有什么好学习的，不就用一个工具设置个wifi代{过}{滤}理就OK了嘛，还不是很多做不了。不如学习安卓逆向。 didi科学家：不好意思，抓包可以为所欲为。
+
+其实学习抓包，完完全全和OD是一模一样的逻辑，尤其是封包逆">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +19,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>使用fiddler对手机上的程序进行抓包 | 苦乐随缘</title>
+    <title>【Fiddler为所欲为第三篇】封包逆向必备知识 | 苦乐随缘</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -267,7 +269,7 @@
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        使用fiddler对手机上的程序进行抓包
+                        【Fiddler为所欲为第三篇】封包逆向必备知识
                     </div>
                 </div>
             </div>
@@ -330,35 +332,99 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><h3 id="用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。"><a href="#用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。" class="headerlink" title="用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。"></a>用fiddler对手机上的程序进行抓包，网上有很多的资料，这里写一下来进行备用。</h3></li>
+<li><blockquote>
+<blockquote>
+<blockquote>
+<p>小A同学：会抓包有什么好学习的，不就用一个工具设置个wifi代{过}{滤}理就OK了嘛，还不是很多做不了。不如学习安卓逆向。<br> didi科学家：不好意思，抓包可以为所欲为。</p>
+</blockquote>
+<p>其实学习抓包，完完全全和OD是一模一样的逻辑，尤其是封包逆向。使用OD需要知道jmp等指令是什么意思，而抓包也是一样的逻辑！</p>
+</blockquote>
+<p>一、封包字段的含义</p>
+<p>   <img src="https://attach.52pojie.cn/forum/201901/28/135039covgodhuu3o88boo.png" alt="img">     </p>
+<p>如图所示，Fiddler的整个界面就是这样，那么这些字段究竟是什么意思呢？这里给大家说一下：</p>
+<p>Result：HTTP状态码　　　　　　</p>
+<p>Protocol：请求使用的协议，如HTTP/HTTPS/FTP等</p>
+<p>HOST：请求地址的主机名或域名</p>
+<p>URL：请求资源的位置</p>
+<p>Body：请求大小</p>
+<p>Caching：请求的缓存过期时间或者缓存控制值</p>
+<p>Content-Type：请求响应的类型</p>
+<p>Process：发送此请求的进程ID</p>
+<p>Comments：备注 </p>
+<p>Custom：自定义值</p>
+<p>二、Request区域</p>
+<p>Request区域如图所示：</p>
+<p>   <img src="https://attach.52pojie.cn/forum/201901/28/135450gqpqw51wm2rarnaw.png" alt="img">     </p>
+<p>那么每一个数据都是什么意思呢？</p>
+<p>请求方式：GET/POST等 </p>
+<p>协议： HTTP/1.1（通常都是这个）</p>
+<p>\1. Cache 头域</p>
+<p>　　if-Modified-since：缓存</p>
+<p>　　if-None-Match：可提高性能（在Response中添加ETag信息，客户端再次请求资源，Request中加入if-None-Match（ETag的值），服务器验证ETag，若没改变返回状态码304，有改变，返回状态码200）</p>
+<p>　　Pragma：防止页面被缓存</p>
+<p>　　Cache-Control：Response—Request遵循的缓存机制</p>
+<p>　　public：可以被任何缓存所缓存</p>
+<p>　　private:内容只缓存在私有缓存中</p>
+<p>　　no-cache：所有内容都不会被缓存</p>
+<p>\2. Client 头域</p>
+<p>　　User-Agent: 告知服务器客户端使用的操作系统与浏览器的名称和版本</p>
+<p>　　Accept: 浏览器端可以接受的媒体、文件类型</p>
+<p>　　Accept-Encoding: 指定压缩方法，是否支持压缩，支持什么压缩方法（gzip、deflate）</p>
+<p>　　Accept-Language: 浏览器申明自己的接收语言</p>
+<p>　　Accept-chareset：浏览器申明自己接收的字符集。如gb2312，UTF_8</p>
+<p>\3. Cookies 头域</p>
+<p>　　有的请求不发送Cookies,有的请求有Cookies。</p>
+<p>　　目的：将cookie值发送给服务器</p>
+<p> \4. Entity头域</p>
+<p>　　Content-Length：发送给HTTP服务器的数据长度</p>
+<p>　　Content-Type：决定文件接收方将以什么形式、什么编码读取此文件</p>
+<p>\5. Security 头域：</p>
+<p>　　Upgrade-Insecure-Requests: 1（默认，这个是自己协商的）</p>
+<p>\6. Transport 头域：</p>
+<p>　　Host: 发送请求时，该报头域是必需的。主要用于指定被请求资源的Internet主机和端口号，通常从HTTP URL 中提取出来</p>
+<p>　　Proxy-Connection:  当网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接是否关闭。keep-alive表示不会关闭，客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接；close表示关闭，客户端再次访问这个服务器上的网页，需要重新建立连接。</p>
+<p>　　connection：Keep—alive            TCP连接不会关闭</p>
+<p>　　connection：close                     一个Request完成后，TCP连接关闭</p>
+<p>\7. Miscellaneous头域</p>
+<p>　　Referer：提供了Request的上下文信息，告诉服务器我是从哪个链接过来的</p>
+<p>　　A——&gt;B（B的服务器从Referer中统计有多少用户是从A过来的）</p>
+<p>三、Response</p>
+<p>Response如图所示：</p>
+<p>   <img src="https://attach.52pojie.cn/forum/201901/28/135912nv971av7gz7zhz87.png" alt="img">     </p>
+<p>\1. Cache头域</p>
+<p>　　Date：生成消息的具体时间和日期</p>
+<p>　　Expires：浏览器在指定过期时间内使用本地缓存</p>
+<p>\2. Cookie/Login头域</p>
+<p>　　P3P：用户跨域设置cookie，可以解决iframe跨域访问cookie的问题</p>
+<p>　　Set-Cookie：重要的header，用于把cookie发送到客户端浏览器，每一个写入cookie都会生成一个set-cookie</p>
+<p>\3. Entity头域</p>
+<p>　　ETag：与if-None-Match配合使用</p>
+<p>　　Last-Modified：用于指示资源的最后修改日期和时间</p>
+<p>　　Content-Type：Web服务器告知浏览器自己响应对象的类型和字符集</p>
+<p>　　Content-Length：指明实体正文长度，以字节方式存储的十进制数字表示。在数据下行中，要预先在服务器中缓存所有数据，然后所有数据一并发给客户端</p>
+<p>　　Content-Encoding：Web服务器表明自己用了什么压缩方式（gzip、deflate）压缩响应中的对象</p>
+<p>　　Content-Language：服务器告知浏览器自己响应的对象语言</p>
+<p>\4. Miscellaneous头域</p>
+<p>　　Server：指明HTTP服务器的软件信息</p>
+<p>　　X-Powered-By：表明网站是用什么技术开发的</p>
+<p>　　X-AspNet-Version：如果网站是用Asp/Net开发的，这个header用来表明Asp/Net的版本</p>
+<p>\5. Transport头域</p>
+<p>　　connection：Keep—alive            TCP连接不会关闭</p>
+<p>　　connection：close                     一个Request完成后，TCP连接关闭</p>
+<p>\6. Location头域</p>
+<p>　　Location：用于重定向一个新的位置，包括新的URL地址</p>
+<p>四、HTTP认证过程</p>
+<p>　　1. 客户端发送HTTP Request给服务器；</p>
+<p>　　2. Request中未包含Authorization header，服务器会返回一个401错误给客户端，且在Response中的header“www-Authenticate”中添加信息；</p>
+<p>　　3. 客户端将用户名和密码以base64加密后，放在Authorization中发送给服务器，认证成功；</p>
+<p>　　4. 服务器将Authorization header中的用户名和密码去除，进行验证。如果验证通过，将根据请求发送资源给客户端；</p>
+<p>　　HTTP OAuth认证：OAuth对于http来说，就是放在Authorization header中的不是用户名密码，而是一个token（令牌）。</p>
+<p>　　客户端的使用：客户端若要跟“使用基本认证的网站”进行交互，将用户名密码加载Authorization header中即可。</p>
+<p>五、Fiddler常见图标的含义</p>
+<p>   <img src="https://attach.52pojie.cn/forum/201901/28/140158gnv8bl6hlo7uul3v.png" alt="img">     </p>
+</blockquote>
+</li>
 </ul>
-<h4 id="前提："><a href="#前提：" class="headerlink" title="前提："></a><strong>前提：</strong></h4><p>  1.必须确保安装fiddler的电脑和手机在同一个wifi环境下</p>
-<p>  备注：如果电脑用的是台式机，可以安装一个随身wifi，来确保台式机和手机在同一wifi环境下</p>
-<p>  2.可以使用电脑安卓模拟器</p>
-<h4 id="安装配置步骤："><a href="#安装配置步骤：" class="headerlink" title="安装配置步骤："></a><strong>安装配置步骤：</strong></h4><h5 id="1-下载一个fiddler，网上随便下一个就可以了"><a href="#1-下载一个fiddler，网上随便下一个就可以了" class="headerlink" title="1.下载一个fiddler，网上随便下一个就可以了"></a>1.下载一个fiddler，网上随便下一个就可以了</h5><h5 id="2-配置fiddler"><a href="#2-配置fiddler" class="headerlink" title="2.配置fiddler"></a>2.配置fiddler</h5><p>  <strong>Tools-&gt;Fiddler Options-&gt;Connections</strong></p>
-<p>  <strong><img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120716187-103213269.png" alt="img"></strong></p>
-<p>  说明：1.Fiddler listens on port是手机连接fiddler时的代理端口号，默认8888即可</p>
-<p>  ​          2.Allow remote computers to connect是允许远程发送请求，需要勾上</p>
-<p>  <strong>Tools-&gt;Fiddler Options-&gt;HTTPS</strong></p>
-<p>  <strong><img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120733937-1858884840.png" alt="img"></strong></p>
-<p>  说明：勾上Decrypt HTTPS traffic，会抓到手机的https请求，如果想抓到https请求还需要在手机安装证书，下面会介绍</p>
-<p>  【fiddler设置后一定要把fiddler重启一下才会生效】</p>
-<h5 id="3-手机上的配置"><a href="#3-手机上的配置" class="headerlink" title="3.手机上的配置"></a>3.手机上的配置</h5><p>  3.1需要安装fiddler证书</p>
-<p>  使用手机浏览器访问http://【电脑IP地址】:【fiddler设置的端口号】，既可以下载fiddler的证书并安装</p>
-<p>  【查看电脑IP的方法，直接在cmd下ipconfig，或者鼠标滑过fiddler的online也可以看到IP地址】</p>
-<p>  <img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120802296-757506898.png" alt="img"></p>
-<p>  以上面看到的我的IP地址为例，手机只要访问<a href="http://10.252.167.91:8888即可下载安装fiddler证书" target="_blank" rel="noopener">http://10.252.167.91:8888即可下载安装fiddler证书</a></p>
-<p>  3.2手机设置wifi的代理</p>
-<p>  连接与电脑相同的wifi，修改wifi的网络，手动设置代理，代理服务器主机名为电脑的IP地址，代理端口为在fiddler里设置的端口号，保存后，fiddler将能够收到手机上的请求信息</p>
-<p>  <img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120829921-223800751.png" alt="img"></p>
-<p>  以上就是配置方法，其他的就可以直接用了，比如在fiddler里进行一下请求的过滤，只看某个服务器下的请求，配置后要点一下Actions来保存过滤</p>
-<p>  <img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120845093-525900958.png" alt="img"></p>
-<p>  在测试中可能会有测试环境，测试环境有的公司时域名相同，但是hosts不同，通过不同的服务器IP地址指向来确定是什么环境。在PC测试上可以非常方便的更改本机hosts指向来切换测试环境和线上环境，在手机上更改hosts比较麻烦。这时候就可以利用fiddler来连接手机，更改电脑的hosts，来实现手机连接测试环境的操作。</p>
-<p>  注意：</p>
-<p>  1.手机配置了代理，fiddler必须启动，手机才可以上网，如果fiddler关闭后手机是不可以联网了，需要将代理去掉才可以进行联网。</p>
-<p>  2.fiddler启东时，会默认将Internet的代理更改为127.0.0.1，在正常退出fiddler时代理会恢复为原来的代理。但是如果遇到fiddler不正常退出（比如进程直接杀掉），会导致代理没有恢复的情况，这是需要手动修改Internet的代理（恢复为原来的代理或者取消代理）</p>
-<p>  设置Internet代理的方法如下：</p>
-<p>  <img src="https://images2015.cnblogs.com/blog/626983/201511/626983-20151126120853421-360569062.png" alt="img"></p>
 
             </div>
             <hr>
@@ -506,7 +572,7 @@
                     </span>
                     <a href="http://Coderzgh.github.io" class="b-link-green">苦乐随缘</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/06/02/fiddler/" class="b-link-green">使用fiddler对手机上的程序进行抓包</a>
+                    <a href="/2019/06/02/fiddler-three/" class="b-link-green">【Fiddler为所欲为第三篇】封包逆向必备知识</a>
                 </p>
             </div>
         </div>
@@ -531,19 +597,25 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/06/02/fiddler-four/">
+                <a href="/2019/06/02/fiddler-two/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="【Fiddler为所欲为第四篇】直播源抓取与接口分析">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="【Fiddler为所欲为第二篇】像OD一样调试">
                         
-                        <span class="card-title">【Fiddler为所欲为第四篇】直播源抓取与接口分析</span>
+                        <span class="card-title">【Fiddler为所欲为第二篇】像OD一样调试</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-今天的教程，主要是教大家如何进行“封包逆向”，关键词跳转，接口分析。（怎么样，是不是感觉和OD很像~~~）今天的教程我们以【麻花影视】为例，当然，其他APP的逻辑也是一样，通用的哦~首先需要做好准备工作：（所有APP的抓包都会用到以下工具
+
+导语： 其实Fiddler隐藏的功能太多太多，其调试功能也是异常强大，可以说是抓包界的“OllyDbg”并不为过。接下来，教大家如何使用Fiddler进行调试、解析，甚至封包“逆向”！
+
+
+
+一、像OD一样定制菜单
+   1.1定制ru
                         
                     </div>
                     <div class="publish-info">
@@ -580,31 +652,31 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/05/19/python-crawler-static-sample-7/">
+                <a href="/2019/06/02/fiddler-four/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之七：动态网页爬取案例实战 Selenium + PhantomJS">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="【Fiddler为所欲为第四篇】直播源抓取与接口分析">
                         
-                        <span class="card-title">Python网络爬虫实战之七：动态网页爬取案例实战 Selenium + PhantomJS</span>
+                        <span class="card-title">【Fiddler为所欲为第四篇】直播源抓取与接口分析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-正文：一、Selenium1、Selenium是什么Selenium 是什么？一句话，自动化测试工具。它支持各种浏览器，包括 Chrome，Safari，Firefox 等主流界面式浏览器，如果你在这些浏览器里面安装一个 Selenium
+今天的教程，主要是教大家如何进行“封包逆向”，关键词跳转，接口分析。（怎么样，是不是感觉和OD很像~~~）今天的教程我们以【麻花影视】为例，当然，其他APP的逻辑也是一样，通用的哦~首先需要做好准备工作：（所有APP的抓包都会用到以下工具
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-19
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Python/" class="post-category" target="_blank">
-                                    Python
+                            <a href="/categories/fiddler/" class="post-category" target="_blank">
+                                    fiddler
                                 </a>
                             
                             
@@ -614,16 +686,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python/" target="_blank">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                    <a href="/tags/Selenium/" target="_blank">
-                        <span class="chip bg-color">Selenium</span>
-                    </a>
-                    
-                    <a href="/tags/PhantomJS/" target="_blank">
-                        <span class="chip bg-color">PhantomJS</span>
+                    <a href="/tags/fiddler/" target="_blank">
+                        <span class="chip bg-color">fiddler</span>
                     </a>
                     
                 </div>
