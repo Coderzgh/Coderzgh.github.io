@@ -4,8 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: Shodan, 苦乐随缘">
-    <meta name="description" content="分类: Shodan | 苦乐随缘">
+    <meta name="keywords" content="分类: shell, 苦乐随缘">
+    <meta name="description" content="分类: shell | 苦乐随缘">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>分类: Shodan | 苦乐随缘</title>
+    <title>分类: shell | 苦乐随缘</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -311,7 +311,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 
                 <a href="/categories/Shodan/" title="Shodan: 1">
                     <span class="chip center-align waves-effect waves-light
-                             chip-active " style="background-color: #D5F5E3;">Shodan
+                             chip-default " style="background-color: #D5F5E3;">Shodan
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -327,7 +327,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 
                 <a href="/categories/shell/" title="shell: 2">
                     <span class="chip center-align waves-effect waves-light
-                             chip-default " style="background-color: #FEF9E7;">shell
+                             chip-active " style="background-color: #FEF9E7;">shell
                         <span class="tag-length">2</span>
                     </span>
                 </a>
@@ -345,30 +345,31 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             <div class="article tag-post col s12 m6 l4 overflow-policy" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2019/05/17/how-shodan/">
+                    <a href="/2019/06/16/rebound-shell-two/">
                         <div class="card-image tag-image">
                             
-                            <img src="/source/images/xxx.jpg" class="responsive-img" alt="什么是 Shodan？">
+                            <img src="/source/images/xxx.jpg" class="responsive-img" alt="Linux 反弹shell（二）反弹shell的本质">
                             
-                            <span class="card-title">什么是 Shodan？</span>
+                            <span class="card-title">Linux 反弹shell（二）反弹shell的本质</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                什么是 Shodan？首先，Shodan 是一个搜索引擎，但它与 Google 这种搜索网址的搜索引擎不同，Shodan 是用来搜索网络空间中在线设备的，你可以通过 Shodan 搜索指定的设备，或者搜索特定类型的设备，其中 Shodan 
+                                
+0X00 前言在上一篇文章 Linux反弹shell（一）文件描述符与重定向，我们已经讨论过了反弹shell中最核心也是相对较难理解的部分，那么接下来我们就可以正式借反弹shell的实例分析回顾前一篇文章讲的知识，并且也加深对反弹shel
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-17
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-16
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fa fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/Shodan/" class="post-category" target="_blank">
-                                    Shodan
+                                <a href="/categories/shell/" class="post-category" target="_blank">
+                                    shell
                                 </a>
                                 
                                 
@@ -379,8 +380,55 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/Shodan/" target="_blank">
-                            <span class="chip bg-color">Shodan</span>
+                        <a href="/tags/反弹shell/" target="_blank">
+                            <span class="chip bg-color">反弹shell</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4 overflow-policy" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2019/06/15/rebound-shell-one/">
+                        <div class="card-image tag-image">
+                            
+                            <img src="/source/images/xxx.jpg" class="responsive-img" alt="Linux反弹shell（一）文件描述符与重定向">
+                            
+                            <span class="card-title">Linux反弹shell（一）文件描述符与重定向</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+0X00 前言由于在反弹shell的过程中有一些非常精简的语句，但是一直没有深入理解，只是作为一个伸手党/搬运工，于是下定决心要将其弄明白，而这里面最难的也就是文件描述符和重定向的部分，因此我特地写一篇文章单独解释这个问题。
+0X01 文
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/shell/" class="post-category" target="_blank">
+                                    shell
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/反弹shell/" target="_blank">
+                            <span class="chip bg-color">反弹shell</span>
                         </a>
                         
                     </div>

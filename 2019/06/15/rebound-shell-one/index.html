@@ -4,8 +4,10 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="苦乐随缘">
-    <meta name="description" content="关于CVE-2019-0708漏洞浅析，和POC验证整理1. 漏洞情况：  微软公司于2019年5月14日发布重要安全公告，其操作系统远程桌面（Remote Desktop Services），俗称的3389服务存在严重安全漏洞（编号CVE">
+    <meta name="keywords" content="Linux反弹shell（一）文件描述符与重定向, 苦乐随缘">
+    <meta name="description" content="
+0X00 前言由于在反弹shell的过程中有一些非常精简的语句，但是一直没有深入理解，只是作为一个伸手党/搬运工，于是下定决心要将其弄明白，而这里面最难的也就是文件描述符和重定向的部分，因此我特地写一篇文章单独解释这个问题。
+0X01 文">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +15,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>苦乐随缘</title>
+    <title>Linux反弹shell（一）文件描述符与重定向 | 苦乐随缘</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -257,13 +259,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/source/images/xxx.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        Linux反弹shell（一）文件描述符与重定向
                     </div>
                 </div>
             </div>
@@ -273,111 +275,35 @@
 
 
 
-<main class="post-container content">
+<main class="container content">
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 20px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
+    <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/反弹shell/" target="_blank">
+                                <span class="chip bg-color">反弹shell</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/shell/" class="post-category" target="_blank">
+                                shell
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -385,7 +311,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-06-11
+                    2019-06-15
                 </div>
 
                 
@@ -401,57 +327,66 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="关于CVE-2019-0708漏洞浅析，和POC验证整理"><a href="#关于CVE-2019-0708漏洞浅析，和POC验证整理" class="headerlink" title="关于CVE-2019-0708漏洞浅析，和POC验证整理"></a>关于CVE-2019-0708漏洞浅析，和POC验证整理</h1><h4 id="1-漏洞情况："><a href="#1-漏洞情况：" class="headerlink" title="1. 漏洞情况："></a>1. 漏洞情况：</h4><p>  微软公司于2019年5月14日发布重要安全公告，其操作系统远程桌面（Remote Desktop Services），俗称的3389服务存在严重安全漏洞（编号CVE-2019-0708）：攻击者在没有任何授权的情况下，可以远程直接攻击操作系统开放的3389服务，在受害主机上执行恶意攻击行为，包括安装后门，查看、篡改隐私数据，创建拥有完全用户权限的新账户，影响范围从Windows XP到Windows 2008 R2。由于3389服务应用广泛且该漏洞利用条件低，只要服务端口开放即可，导致该漏洞影响和危害程序堪比“WannaCry”。因此，微软额外为Windows XP、Windows 2003这些已经停止支持的系统发布了该漏洞的安全补丁。 </p>
-<h4 id="2-漏洞概要："><a href="#2-漏洞概要：" class="headerlink" title="2. 漏洞概要："></a><strong>2. 漏洞概要</strong>：</h4><p>*<img src="https://image.3001.net/images/20190605/1559722366_5cf7797ebfc2c.jpg!small" alt="QQ截图20190605101736.jpg">**</p>
-<h4 id="3-预防与修复建议："><a href="#3-预防与修复建议：" class="headerlink" title="3. 预防与修复建议："></a>3. 预防与修复建议：</h4><ol>
-<li>升级微软官方补丁：</li>
-</ol>
-<p>Windos XP、Windows 2003等老旧系统需手动下载补丁：<a href="https://support.microsoft.com/en-ca/help/4500705/customer-guidance-for-cve-2019-0708；" target="_blank" rel="noopener">https://support.microsoft.com/en-ca/help/4500705/customer-guidance-for-cve-2019-0708；</a></p>
-<p>Windows 7、Windows 2008系统自动升级即可，手动升级可到如下链接下载补丁：<a href="https://www.catalog.update.microsoft.com/Search.aspx?q=KB4499175；" target="_blank" rel="noopener">https://www.catalog.update.microsoft.com/Search.aspx?q=KB4499175；</a></p>
-<ol start="2">
-<li>如非必要，请关闭远程桌面服务；</li>
-</ol>
-<h4 id="4-打补丁前后比较"><a href="#4-打补丁前后比较" class="headerlink" title="4. 打补丁前后比较:"></a>4. 打补丁前后比较:</h4><p>  通过分析打补丁前后差异在于 termdd.sys 文件的 IcaBindVirtualChannels 及  IcaReBindVirtualChannels ，增加了对 MS_T120 协议通道的判定，如果是通道协议名为 MS_T120 ，则设定  IcaBindChannel 的第三个参数为 31 。</p>
-<p><a href="https://image.3001.net/images/20190605/1559722413_5cf779ad53a16.jpg" target="_blank" rel="noopener"><img src="https://image.3001.net/images/20190605/1559722413_5cf779ad53a16.jpg!small" alt="2.jpg"></a></p>
-<p>服务端在初始化时，会创建名为MS_T120、 Index 为 31 的通道，在收到 MCS Connect Initial  数据封包后进行通道创建和绑定操作，在 IcaBindVirtualChannels 函数中进行绑定时， IcaFindChannelByName  函数只根据通道名进行通道查找。当通道名为 MS_T120 (不区分大小写)时，会找到系统内部通道 MS_T120  的通道并与之绑定，绑定后，通道索引会即被更改为新的通道索引。 </p>
-<h4 id="5-漏洞复现和POC验证："><a href="#5-漏洞复现和POC验证：" class="headerlink" title="5. 漏洞复现和POC验证："></a>5. 漏洞复现和POC验证：</h4><table>
-<thead>
-<tr>
-<th>验证环境和脚本</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Windows7（靶机）</td>
-<td>（VM下NAT模式或桥接模式）</td>
-</tr>
-<tr>
-<td>kali Linux（验证机）</td>
-<td></td>
-</tr>
-<tr>
-<td>Python3</td>
-<td>需要安装POC依赖 OpenSSL，impacket.structure</td>
-</tr>
-<tr>
-<td>Poc（验证脚本-蓝屏）</td>
-<td><a href="https://github.com/1amfine2333/CVE-2019-0708" target="_blank" rel="noopener">https://github.com/1amfine2333/CVE-2019-0708</a></td>
-</tr>
-<tr>
-<td>Poc（未验证）</td>
-<td><a href="https://github.com/Ekultek/BlueKeep" target="_blank" rel="noopener">https://github.com/Ekultek/BlueKeep</a></td>
-</tr>
-<tr>
-<td>Poc（基于poc正在开发exp的项目）</td>
-<td><a href="https://github.com/algo7/bluekeep_CVE-2019-0708_poc_to_exploit" target="_blank" rel="noopener">https://github.com/algo7/bluekeep_CVE-2019-0708_poc_to_exploit</a></td>
-</tr>
-</tbody>
-</table>
-<h5 id="5-1-已经开启远程连接，且网络设置正确："><a href="#5-1-已经开启远程连接，且网络设置正确：" class="headerlink" title="5.1 已经开启远程连接，且网络设置正确："></a>5.1 已经开启远程连接，且网络设置正确：</h5><p><img src="https://i.bmp.ovh/imgs/2019/06/2dce944df2bf5494.png" alt></p>
-<h5 id="5-2-验证机中克隆POC-开始验证："><a href="#5-2-验证机中克隆POC-开始验证：" class="headerlink" title="5.2 验证机中克隆POC,开始验证："></a>5.2 验证机中克隆POC,开始验证：</h5><p><img src="https://i.bmp.ovh/imgs/2019/06/b1374b7e4c2e013d.png" alt></p>
-<h5 id="5-3-靶机windows7-蓝屏重启："><a href="#5-3-靶机windows7-蓝屏重启：" class="headerlink" title="5.3 靶机windows7 蓝屏重启："></a>5.3 靶机windows7 蓝屏重启：</h5><p><img src="https://i.bmp.ovh/imgs/2019/06/53a110f293d74507.png" alt></p>
-<h4 id="6-总结与延伸："><a href="#6-总结与延伸：" class="headerlink" title="6.总结与延伸："></a>6.总结与延伸：</h4><p>可供验证的POC有很多，仅仅作为漏洞复现，采用了最直观的一种，整理的比较简略，后续可结合shodan，zoomeye等api，编程对具有潜在漏洞特征的目标，实现自动化信息采集和检测。</p>
+                <ul>
+<li><h2 id="0X00-前言"><a href="#0X00-前言" class="headerlink" title="0X00 前言"></a><strong>0X00 前言</strong></h2><p>由于在反弹shell的过程中有一些非常精简的语句，但是一直没有深入理解，只是作为一个伸手党/搬运工，于是下定决心要将其弄明白，而这里面最难的也就是文件描述符和重定向的部分，因此我特地写一篇文章单独解释这个问题。</p>
+<h2 id="0X01-文件描述符"><a href="#0X01-文件描述符" class="headerlink" title="0X01 文件描述符"></a><strong>0X01 文件描述符</strong></h2><blockquote>
+<p><strong>linux文件描述符</strong>：可以理解为linux跟踪打开文件，而分配的一个数字，这个数字有点类似c语言操作文件时候的句柄，通过句柄就可以实现文件的读写操作。</p>
+</blockquote>
+<p>当Linux启动的时候会默认打开三个文件描述符，分别是：</p>
+<p>标准输入standard input 0 （默认设备键盘）<br> 标准输出standard output 1（默认设备显示器）<br> 错误输出：error output 2（默认设备显示器）</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d73c1264-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d73c1264-9c80-1.png" alt="img"></a></p>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a><strong>注意：</strong></h3><p>（1）以后再打开文件，描述符可以依次增加<br> （2）一条shell命令，都会继承其父进程的文件描述符，因此所有的shell命令，都会默认有三个文件描述符。</p>
+<p><strong>文件所有输入输出都是由该进程所有打开的文件描述符控制的。（Linux一切皆文件，就连键盘显示器设备都是文件，因此他们的输入输出也是由文件描述符控制）</strong></p>
+<p>一条命令执行以前先会按照默认的情况进行绑定（也就是上面所说的 0,1,2），如果我们有时候需要让输出不显示在显示器上，而是输出到文件或者其他设备，那我们就需要重定向。</p>
+<h2 id="0X02-重定向"><a href="#0X02-重定向" class="headerlink" title="0X02 重定向"></a><strong>0X02 重定向</strong></h2><p>重定向主要分为两种(其他复杂的都是从这两种衍生而来的)：</p>
+<p>（1）输入重定向 &lt; &lt;&lt;<br> （2）输出重定向 &gt; &gt;&gt;</p>
+<h3 id="重点："><a href="#重点：" class="headerlink" title="重点："></a><strong>重点：</strong></h3><p>1.bash 在执行一条指令的时候，首先会检查命令中存不存在重定向的符号，如果存在那么首先将文件描述符重定向（之前说过了，输入输出操作都是依赖文件描述符实现的，重定向输入输出本质上就是重定向文件描述符），然后在把重定向去掉，执行指令</p>
+<p>2.如果指令中存在多个重定向，那么不要随便改变顺序，因为重定向是从左向右解析的，改变顺序可能会带来完全不同的结果（这一点我们后面会展示）</p>
+<p>3.&lt; 是对标准输入 0 重定向 ，&gt; 是对标准输出 1 重定向</p>
+<p><strong>4.再强调一下，重定向就是针对文件描述符的操作</strong></p>
+<h3 id="1-输入重定向"><a href="#1-输入重定向" class="headerlink" title="1.输入重定向"></a><strong>1.输入重定向</strong></h3><p>格式：  [n]&lt; word <strong>（注意[n]与&lt;之间没有空格）</strong></p>
+<p>说明：将文件描述符 n 重定向到 word 指代的文件（以只读方式打开）,如果n省略就是0（标准输入）</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d749a4e2-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d749a4e2-9c80-1.png" alt="img"></a></p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d7566fc4-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d7566fc4-9c80-1.png" alt="img"></a></p>
+<p>解释: 解析器解析到 “&lt;” 以后会先处理重定向，将标准输入重定向到file，之后cat再从标准输入读取指令的时候，由于标准输入已经重定向到了file ，于是cat就从file中读取指令了。(<strong>有没有觉得这个其实就是C语言中的指针或者文件句柄，就是将0这个指针指向了不同的地址，自然有不同的输入</strong>)</p>
+<p>图示:</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d763ff72-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d763ff72-9c80-1.png" alt="img"></a></p>
+<h3 id="2-输出重定向"><a href="#2-输出重定向" class="headerlink" title="2.输出重定向"></a><strong>2.输出重定向</strong></h3><p>格式：   [n]&gt; word</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d774b3bc-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d774b3bc-9c80-1.png" alt="img"></a></p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d77f7b1c-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d77f7b1c-9c80-1.png" alt="img"></a></p>
+<p>说明： 将文件描述符 n 重定向到word 指代的文件（以写的方式打开），如果n 省略则默认就是 1（标准输出）</p>
+<p>图示：</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d79014c2-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d79014c2-9c80-1.png" alt="img"></a></p>
+<h3 id="3-标准输出与标准错误输出重定向"><a href="#3-标准输出与标准错误输出重定向" class="headerlink" title="3.标准输出与标准错误输出重定向"></a><strong>3.标准输出与标准错误输出重定向</strong></h3><p>格式： &amp;&gt; word     &gt;&amp; word</p>
+<p>说明:将标准输出与标准错误输出都定向到word代表的文件（以写的方式打开），两种格式意义完全相同，这种格式完全等价于 &gt; word  2&gt;&amp;1 (2&gt;&amp;1  是将标准错误输出复制到标准输出，&amp;是为了区分文件1和文件描述符1的，详细的介绍后面会有)</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d79df60a-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d79df60a-9c80-1.png" alt="img"></a></p>
+<p>解释：我们首先执行了一个错误的命令，可以看到错误提示被写入文件（正常情况下是会直接输出的），我们又执行了一条正确的指令，发现结果也输入到了文件，说明正确错误消息都能输出到文件。</p>
+<p>图示：</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7abf9e4-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7abf9e4-9c80-1.png" alt="img"></a></p>
+<h3 id="4-文件描述符的复制"><a href="#4-文件描述符的复制" class="headerlink" title="4.文件描述符的复制"></a><strong>4.文件描述符的复制</strong></h3><p>格式： [n]&lt;&amp;[m] / [n]&gt;&amp;[m] <strong>(这里所有字符之间不要有空格)</strong></p>
+<p>说明：</p>
+<p>1）这里两个<strong>都是将文件描述符 n 复制到 m</strong> ，两者的区别是，前者是以只读的形式打开，后者是以写的形式打开</p>
+<p><strong>因此 0&lt;&amp;1 和 0&gt;&amp;1 是完全等价的（读/写方式打开对其没有任何影响）</strong></p>
+<p>2）这里的&amp; 目的是为了区分数字名字的文件和文件描述符，如果没有&amp; 系统会认为是将文件描述符重定向到了一个数字作为文件名的文件，而不是一个文件描述符</p>
+<p>这里就可以用上面的例子作为演示，将错误和正确的输出都输入到文件中</p>
+<h3 id="重点：-1"><a href="#重点：-1" class="headerlink" title="重点："></a><strong>重点：</strong></h3><p>之前我们说过，重定向符号的顺序不能随便换，因为系统是从左到右执行的，我们下面就举一个例子</p>
+<p>(1)cmd &gt; file 2&gt;&amp;1<br> (2)cmd 2&gt;&amp;1 &gt;file</p>
+<p>与第一条指令类似的指令在上面我已经介绍过了，我们现在就来看看第二条指令的执行过程</p>
+<p><strong>1.首先解析器解析到 2&gt;&amp;1</strong></p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7bcbb94-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7bcbb94-9c80-1.png" alt="img"></a></p>
+<p><strong>2.解析器再向后解析到 “&gt;”</strong></p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7cdb7be-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7cdb7be-9c80-1.png" alt="img"></a></p>
+<h3 id="5-exec-绑定重定向"><a href="#5-exec-绑定重定向" class="headerlink" title="5.exec 绑定重定向"></a><strong>5.exec 绑定重定向</strong></h3><p>格式：exec [n] &lt;/&gt; file/[n]</p>
+<p>上面的输入输出重定向将输入和输出绑定文件或者设备以后只对当前的那条指令有效，如果需要接下来的指令都支持的话就需要使用 exec 指令</p>
+<h3 id="重点：-2"><a href="#重点：-2" class="headerlink" title="重点："></a><strong>重点：</strong></h3><p>格式： [n]&lt;&gt;word</p>
+<p>说明：以读写方式打开word指代的文件，并将n重定向到该文件。如果n不指定的话，默认为标准输入。</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7da9894-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7da9894-9c80-1.png" alt="img"></a></p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7e99074-9c80-1.png" target="_blank" rel="noopener"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7e99074-9c80-1.png" alt="img"></a></p>
+<h2 id="0X03-总结"><a href="#0X03-总结" class="headerlink" title="0X03 总结"></a><strong>0X03 总结</strong></h2><p>文件描述符和重定向的作用巨大，很好的体现出了Linux中一切皆文件的特性，在反弹shell建立交互通道的过程中也起到了至关重要的作用。</p>
+<p>个人博客： <a href="http://www.k0rz3n.com" target="_blank" rel="noopener">http://www.k0rz3n.com</a></p>
+<h2 id="0X04-参考链接"><a href="#0X04-参考链接" class="headerlink" title="0X04 参考链接"></a><strong>0X04 参考链接</strong></h2><p><a href="https://blog.csdn.net/ccwwff/article/details/48519119" target="_blank" rel="noopener">https://blog.csdn.net/ccwwff/article/details/48519119</a><br> <a href="http://www.cnblogs.com/chengmo/archive/2010/10/20/1855805.html" target="_blank" rel="noopener">http://www.cnblogs.com/chengmo/archive/2010/10/20/1855805.html</a><br> <a href="http://www.178linux.com/54471" target="_blank" rel="noopener">http://www.178linux.com/54471</a></p>
+</li>
+</ul>
 
             </div>
             <hr>
@@ -599,7 +534,7 @@
                     </span>
                     <a href="http://Coderzgh.github.io" class="b-link-green">苦乐随缘</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/06/11/cve-2019-0708-lou-dong-qian-xi/" class="b-link-green"></a>
+                    <a href="/2019/06/15/rebound-shell-one/" class="b-link-green">Linux反弹shell（一）文件描述符与重定向</a>
                 </p>
             </div>
         </div>
@@ -624,25 +559,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/06/15/rebound-shell-one/">
+                <a href="/2019/06/16/rebound-shell-two/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Linux反弹shell（一）文件描述符与重定向">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Linux 反弹shell（二）反弹shell的本质">
                         
-                        <span class="card-title">Linux反弹shell（一）文件描述符与重定向</span>
+                        <span class="card-title">Linux 反弹shell（二）反弹shell的本质</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-0X00 前言由于在反弹shell的过程中有一些非常精简的语句，但是一直没有深入理解，只是作为一个伸手党/搬运工，于是下定决心要将其弄明白，而这里面最难的也就是文件描述符和重定向的部分，因此我特地写一篇文章单独解释这个问题。
-0X01 文
+0X00 前言在上一篇文章 Linux反弹shell（一）文件描述符与重定向，我们已经讨论过了反弹shell中最核心也是相对较难理解的部分，那么接下来我们就可以正式借反弹shell的实例分析回顾前一篇文章讲的知识，并且也加深对反弹shel
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-15
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-16
                         </span>
                         <span class="publish-author">
                             
@@ -674,48 +608,32 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/06/02/fiddler-one/">
+                <a href="/2019/06/11/cve-2019-0708-lou-dong-qian-xi/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Fiddler大解析！抱歉，抓包抓得好真的可以为所欲为">
                         
-                        <span class="card-title">Fiddler大解析！抱歉，抓包抓得好真的可以为所欲为</span>
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt>
+                        
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            说起抓包，很多人以为就是用个工具，简简单单地抓一下就可以了。
-在这里，我必须发一个教程，解析一下抓包神器——Fiddler。
-Fiddler仅仅是一个抓包工具？不好意思，Fiddler用得好，真的可以为所欲为。
-Fiddler的作者
-
-Fi
+                            关于CVE-2019-0708漏洞浅析，和POC验证整理1. 漏洞情况：  微软公司于2019年5月14日发布重要安全公告，其操作系统远程桌面（Remote Desktop Services），俗称的3389服务存在严重安全漏洞（编号CVE
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-02
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-11
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/fiddler/" class="post-category" target="_blank">
-                                    fiddler
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            Demo
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/fiddler/" target="_blank">
-                        <span class="chip bg-color">fiddler</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -727,99 +645,6 @@ Fi
 
 
 
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fa fa-list"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            // headingsOffset: -205,
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).slideUp(500);
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).slideDown(500);
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
     
 
 </main>
