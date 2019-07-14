@@ -648,50 +648,45 @@ Requests 是基于urllib编写的第三方
         
         <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/05/11/python-crawler-basic-internet-1/">
+                <a href="/2019/04/01/sqlmap-tamper/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之一：网络爬虫理论基础">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="sqlmap使用记录--tamper">
                         
-                        <span class="card-title">Python网络爬虫实战之一：网络爬虫理论基础</span>
+                        <span class="card-title">sqlmap使用记录--tamper</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、浏览网页的基本过程和通信基础
-当我们在浏览器地址栏输入： http://www.baidu.com 回车后会浏览器显示百度的首页，那这 段网络通信过程中到底发生了什么？
-
-简单来说这段过程发生了以下四个步骤：
-
-浏览器通过DNS服务器查
+                            sqlmap在默认的的情况下除了使用char()函数防止出现单引号，没有对注入的数据进行修改，还可以使用–tamper参数对数据做修改来绕过waf等设备。
+0x01 命令如下1  sqlmap -u [url] --tamper [模块名]
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-11
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Python/" class="post-category" target="_blank">
-                                    Python
+                            <a href="/categories/sqlmap/" class="post-category" target="_blank">
+                                    sqlmap
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python/" target="_blank">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/sqlmap/" target="_blank">
+                        <span class="chip bg-color">sqlmap</span>
                     </a>
                     
                 </div>

